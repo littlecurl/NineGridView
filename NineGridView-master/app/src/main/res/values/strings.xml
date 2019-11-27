@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NineGridView</string>
+    <string name="button1">视频详情</string>
+    <string name="button2">九宫格</string>
+</resources>
