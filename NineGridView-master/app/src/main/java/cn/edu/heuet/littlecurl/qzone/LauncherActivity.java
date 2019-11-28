@@ -22,7 +22,7 @@ import java.util.ArrayList;
 /**
  * 这个类主要就是为了跳转页面
  */
-public class MainActivity extends AppCompatActivity
+public class LauncherActivity extends AppCompatActivity
         implements View.OnClickListener {
 
     @Override
