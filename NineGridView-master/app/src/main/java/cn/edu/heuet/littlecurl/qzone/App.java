@@ -33,6 +33,7 @@ public class App extends Application {
     private class GlideImageLoader implements NineGridViewGroup.ImageLoader {
         GlideImageLoader() {
         }
+
         @Override
         public void onDisplayImage(Context context, ImageView imageView, String url) {
             Glide.with(context)

@@ -39,8 +39,8 @@ dependencies {
     // ButterKnife黄油刀
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
-    // Ptr下拉刷新
-    implementation 'in.srain.cube:ultra-ptr:1.0.11'
+    // SwipeRefreshLayout下拉刷新
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     // Grid网格布局
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     // Glide图片加载
@@ -51,5 +51,6 @@ dependencies {
     implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.62'
     // 九宫格控件
     implementation project(':ninegridview')
+    // RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }

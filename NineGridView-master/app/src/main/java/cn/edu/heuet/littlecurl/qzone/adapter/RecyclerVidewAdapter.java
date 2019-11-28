@@ -24,7 +24,7 @@ import cn.edu.heuet.littlecurl.ninegridview.ui.NineGridViewGroup;
 import cn.edu.heuet.littlecurl.qzone.bean.MyMedia;
 import cn.edu.heuet.littlecurl.qzone.bean.RecyclerViewItem;
 
-public class RecyclerVidewAdapter extends RecyclerView.Adapter<RecyclerVidewAdapter.ViewHolder>{
+public class RecyclerVidewAdapter extends RecyclerView.Adapter<RecyclerVidewAdapter.ViewHolder> {
 
     private Context context;
     private List<RecyclerViewItem> recyclerViewItemList;
@@ -46,7 +46,7 @@ public class RecyclerVidewAdapter extends RecyclerView.Adapter<RecyclerVidewAdap
     @NonNull
     @Override
     public RecyclerVidewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_recyclerview,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_recyclerview, parent, false);
         return new ViewHolder(view);
     }
 
@@ -98,7 +98,7 @@ public class RecyclerVidewAdapter extends RecyclerView.Adapter<RecyclerVidewAdap
         RecyclerViewItem recyclerViewItem = recyclerViewItemList.get(position);
 
         // 往控件上绑定数据
-        setImage(context,holder.avatar, recyclerViewItem.getHeadImageUrl());
+        setImage(context, holder.avatar, recyclerViewItem.getHeadImageUrl());
         holder.tv_username.setText(recyclerViewItem.getNickName());
         holder.tv_createTime.setText(recyclerViewItem.getCreateTime());
         holder.tv_content.setText(recyclerViewItem.getContent());
@@ -106,30 +106,30 @@ public class RecyclerVidewAdapter extends RecyclerView.Adapter<RecyclerVidewAdap
         holder.iv_detail_triangle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"位置详情图标点击事件还未开发",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "位置详情图标点击事件还未开发", Toast.LENGTH_SHORT).show();
             }
         });
         holder.iv_eye.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"围观图标点击事件还未开发",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "围观图标点击事件还未开发", Toast.LENGTH_SHORT).show();
             }
         });
         holder.iv_detail_triangle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"分享图标点击事件还未开发",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "分享图标点击事件还未开发", Toast.LENGTH_SHORT).show();
             }
         });
 
         // 为适应适配器要求数据，需要单独取出图片Url
         ArrayList<MyMedia> mediaList = recyclerViewItem.getMediaList();
         ArrayList<MediaItem> mediaItemList = new ArrayList<>();
-        for (MyMedia myMedia : mediaList){
+        for (MyMedia myMedia : mediaList) {
             String thumbnailUrl = myMedia.getImageUrl();
             String bigImageUrl = thumbnailUrl;
             String videoUrl = myMedia.getVideoUrl();
-            mediaItemList.add(new MediaItem(thumbnailUrl,bigImageUrl,videoUrl));
+            mediaItemList.add(new MediaItem(thumbnailUrl, bigImageUrl, videoUrl));
         }
         NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(mediaItemList);
         holder.nineGridViewGroup.setAdapter(nineGridViewAdapter);

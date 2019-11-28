@@ -24,7 +24,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 
 import cn.edu.heuet.littlecurl.R;
 
-public class CircleImageView extends AppCompatImageView{
+public class CircleImageView extends AppCompatImageView {
 
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;      //只允许CENTER_CROP模式
     private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;  //默认创建的格式
@@ -125,7 +125,9 @@ public class CircleImageView extends AppCompatImageView{
         invalidate();
     }
 
-    /** 没有调用父类的 super 方法，全完靠自定义控件绘制出来 */
+    /**
+     * 没有调用父类的 super 方法，全完靠自定义控件绘制出来
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         if (mBitmap != null)
@@ -136,7 +138,9 @@ public class CircleImageView extends AppCompatImageView{
             canvas.drawCircle(getWidth() / 2.0f, getHeight() / 2.0f, mBorderRadius, mBorderPaint);  //绘制边框
     }
 
-    /** 将传入的drawable转换成bitmap */
+    /**
+     * 将传入的drawable转换成bitmap
+     */
     private Bitmap getBitmapFromDrawable(Drawable drawable) {
         if (drawable == null) return null;
         if (drawable instanceof BitmapDrawable) return ((BitmapDrawable) drawable).getBitmap();

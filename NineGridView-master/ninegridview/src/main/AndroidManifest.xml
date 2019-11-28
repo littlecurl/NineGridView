@@ -14,10 +14,6 @@
             android:screenOrientation="portrait"
             />
 
-        <activity
-            android:name="cn.edu.heuet.littlecurl.ninegridview.detail.DetailPlayer"
-            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

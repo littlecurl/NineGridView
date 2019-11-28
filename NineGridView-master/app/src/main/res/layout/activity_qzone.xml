@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <in.srain.cube.views.ptr.PtrClassicFrameLayout
-        android:id="@+id/ptr"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/spl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -13,5 +13,5 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>

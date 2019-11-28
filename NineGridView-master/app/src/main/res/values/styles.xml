@@ -18,15 +18,4 @@
         <!-- 是否半透明 -->
         <item name="android:windowIsTranslucent">true</item>
     </style>
-
-    <style name="dialog_anim" mce_bogus="1" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
-        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
-    </style>
-
-    <style name="popup_more_anim" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/reply_window_enter</item>
-        <item name="android:windowExitAnimation">@anim/reply_window_exit</item>
-    </style>
-
 </resources>

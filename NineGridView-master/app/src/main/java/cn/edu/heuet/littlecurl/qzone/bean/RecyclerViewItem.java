@@ -11,7 +11,7 @@ public class RecyclerViewItem implements Serializable {
     private String nickName;                 // 名字
     private Location location;               // location
     private String headImageUrl;             // 头像
-    private ArrayList<MyMedia>  mediaList;   // 九宫格数据
+    private ArrayList<MyMedia> mediaList;   // 九宫格数据
 
     public RecyclerViewItem() {
     }
