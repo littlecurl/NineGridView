@@ -56,7 +56,6 @@ public class NineGridViewAdapter {
         bundle.putInt(NineGridItemDetailActivity.CURRENT_ITEM, index);
         intent.putExtras(bundle);
         context.startActivity(intent);
-        Log.d("日志0","点击图片，跳转到详情");
         ((Activity) context).overridePendingTransition(0, 0);
     }
 
