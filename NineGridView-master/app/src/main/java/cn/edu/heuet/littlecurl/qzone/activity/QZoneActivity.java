@@ -18,7 +18,14 @@ import cn.edu.heuet.littlecurl.qzone.bean.Location;
 import cn.edu.heuet.littlecurl.qzone.bean.MyMedia;
 import cn.edu.heuet.littlecurl.qzone.bean.RecyclerViewItem;
 
-public class QZoneActivity extends AppCompatActivity {
+/**
+ * 从 activity_qzone.xml 布局文件中可以看出来
+ * 一个下拉刷新组件SwipeRefreshLayout里面套一个RecyclerView
+ * 所以此类的作用就是获取数据（我自己手写的）
+ * 然后将数据给到RecyclerView的适配器
+ */
+public class QZoneActivity extends AppCompatActivity
+        implements SwipeRefreshLayout.OnRefreshListener {
 
     // Log打印的通用Tag
     private final String TAG = "QZoneActivity:";
@@ -45,33 +52,18 @@ public class QZoneActivity extends AppCompatActivity {
 
         // 布局管理器必须有，否则不显示布局
         // No layout manager attached; skipping layout
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(llm);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         // RecyclerView适配器
         recyclerViewAdapter = new RecyclerVidewAdapter(this, recyclerViewItemList);
         recyclerView.setAdapter(recyclerViewAdapter);
 
-
-        // 下拉刷新控件设置参数
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // 加载数据（先清空原来的数据）
-                recyclerViewItemList.clear();
-                // loadBackendData(url);
-                loadMyTestDate();
-                // 打乱顺序（为了确认确实是刷新了）
-                Collections.shuffle(recyclerViewItemList);
-                // 通知适配器数据已经改变
-                recyclerViewAdapter.notifyDataSetChanged();
-                // 下拉刷新完成
-                if (swipeRefreshLayout.isRefreshing()) {
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-            }
-        });
+        // 下拉刷新控件
+        // 因为该类 implements SwipeRefreshLayout.OnRefreshListener
+        // 所以只需要在onCreate里注册一下监听器，具体的响应事件可以写到onCreate方法之外
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     // 自定义的测试数据（假装这是网络请求并解析后的数据）
@@ -96,14 +88,11 @@ public class QZoneActivity extends AppCompatActivity {
         MyMedia myMedia5 = new MyMedia(imgUrl3, videoUrl4);
         // 再构造mediaList
         ArrayList<MyMedia> mediaList = new ArrayList<>();
-        for (int i = 0; i < 2; i++) { // 加入6张图片
+        for (int i = 0; i < 2; i++) { // 加入10张图片
             mediaList.add(myMedia1);
             mediaList.add(myMedia2);
             mediaList.add(myMedia3);
-        }
-        for (int i = 0; i < 2; i++) { // 加入6张图片
             mediaList.add(myMedia4);
-            mediaList.add(myMedia2);
             mediaList.add(myMedia5);
         }
         Location location = new Location();
@@ -118,5 +107,21 @@ public class QZoneActivity extends AppCompatActivity {
         recyclerViewItemList.add(recyclerViewItem1);
         recyclerViewItemList.add(recyclerViewItem2);
         recyclerViewItemList.add(recyclerViewItem3);
+    }
+
+    @Override
+    public void onRefresh() {
+        // 加载数据（先清空原来的数据）
+        recyclerViewItemList.clear();
+        // loadBackendData(url);
+        loadMyTestDate();
+        // 打乱顺序（为了确认确实是刷新了）
+        Collections.shuffle(recyclerViewItemList);
+        // 通知适配器数据已经改变
+        recyclerViewAdapter.notifyDataSetChanged();
+        // 下拉刷新完成
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 }

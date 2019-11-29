@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,6 +21,7 @@
             android:id="@+id/avatar"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginStart="8dp"
             android:src="@drawable/ic_default_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,20 +57,28 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="73dp" />
+
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
         android:singleLine="false"
         android:textColor="#505050"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_base_info"
+        app:layout_constraintTop_toBottomOf="@+id/guideline8"
         tools:text="内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test" />
 
-    <cn.edu.heuet.littlecurl.ninegridview.ui.NineGridViewGroup
+    <cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup
         android:id="@+id/nineGrid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,12 +92,11 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_content" />
 
 
-    <LinearLayout
-        android:id="@+id/ll_location"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nineGrid">
@@ -96,37 +105,46 @@
             android:id="@+id/iv_location"
             android:layout_width="10dp"
             android:layout_height="12dp"
-            android:layout_marginStart="5dp"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.503"
             app:srcCompat="@mipmap/locationtwo" />
 
         <TextView
             android:id="@+id/tv_location"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:textColor="#ff606060"
             android:textSize="8sp"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
-            tools:ignore="SmallSp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_location"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.501"
+            tools:ignore="SmallSp"
+            tools:text="Test Address" />
 
         <ImageView
             android:id="@+id/iv_detail_triangle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_location"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@mipmap/triangle" />
-    </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.103797466" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_bottom_tools"
@@ -137,7 +155,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_location">
+        app:layout_constraintTop_toBottomOf="@+id/cl_location">
 
 
         <TextView
@@ -145,12 +163,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:text="@string/see"
             android:textColor="#ff606060"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/iv_eye"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.503"
             tools:text="围观" />
@@ -180,10 +199,11 @@
             android:layout_width="26dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:text="@string/share"
             android:textColor="#ff606060"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/iv_share"
             app:layout_constraintTop_toTopOf="parent"
@@ -194,17 +214,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="201dp" />
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/ll_comments"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/cl_bottom_tools">
+        app:layout_constraintTop_toBottomOf="@+id/cl_bottom_tools">
 
         <cn.edu.heuet.littlecurl.qzone.ui.ExpandListView
             android:id="@+id/lv_comments"
@@ -221,5 +256,12 @@
             android:paddingRight="8dp"
             android:paddingBottom="5dp" />
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05109489" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

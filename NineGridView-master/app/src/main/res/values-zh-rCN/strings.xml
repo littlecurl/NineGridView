@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">九宫格示例</string>
+    <string name="button">九宫格混合展示图片+视频</string>
+</resources>

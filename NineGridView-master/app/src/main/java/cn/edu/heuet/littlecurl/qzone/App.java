@@ -9,12 +9,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import cn.edu.heuet.littlecurl.R;
-import cn.edu.heuet.littlecurl.ninegridview.ui.NineGridViewGroup;
+import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
 
 /**
- * 此类配置在AndroidManifest.xml文件中
+ * 此类继承自Application
+ * 一般Application的作用就是在App启动的时候，
+ * 加载那些只需要加载一次的东西
+ * 比如：图片加载器
+ * 该类需要在AndroidManifest.xml文件中进行配置
  * android:name=".qzone.App"
- * 只会在应用启东时加载一次
  */
 public class App extends Application {
     @Override
@@ -28,7 +31,7 @@ public class App extends Application {
     }
 
     /**
-     * Glide 加载
+     * Glide 加载图片
      */
     private class GlideImageLoader implements NineGridViewGroup.ImageLoader {
         GlideImageLoader() {

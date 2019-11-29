@@ -1,4 +1,4 @@
-package cn.edu.heuet.littlecurl.ninegridview.ui;
+package cn.edu.heuet.littlecurl.ninegridview.preview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 
 import cn.edu.heuet.littlecurl.R;
 import cn.edu.heuet.littlecurl.ninegridview.base.NineGridViewAdapter;
-import cn.edu.heuet.littlecurl.ninegridview.bean.MediaItem;
+import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class NineGridViewGroup extends ViewGroup {
     private int gridHeight;     // 宫格高度
 
     private List<ImageView> imageViewList;
-    private List<MediaItem> mediaItemList;
+    private List<NineGridItem> nineGridItemList;
     private NineGridViewAdapter mAdapter;
 
     public NineGridViewGroup(Context context) {
@@ -75,9 +75,9 @@ public class NineGridViewGroup extends ViewGroup {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = 0;
         int totalWidth = width - getPaddingLeft() - getPaddingRight();
-        if (mediaItemList != null && mediaItemList.size() > 0) {
+        if (nineGridItemList != null && nineGridItemList.size() > 0) {
             // 只有一张图片的情况
-            if (mediaItemList.size() == 1) {
+            if (nineGridItemList.size() == 1) {
                 gridWidth = singleMediaSize > totalWidth ? totalWidth : singleMediaSize;
                 gridHeight = (int) (gridWidth / singleImageRatio);
                 //矫正图片显示区域大小，不允许超过最大显示范围
@@ -103,8 +103,8 @@ public class NineGridViewGroup extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        if (mediaItemList == null) return;
-        int childrenCount = mediaItemList.size();
+        if (nineGridItemList == null) return;
+        int childrenCount = nineGridItemList.size();
         for (int i = 0; i < childrenCount; i++) {
             ImageView childrenView = (ImageView) getChildAt(i);
             int rowNum = i / columnCount;
@@ -117,7 +117,7 @@ public class NineGridViewGroup extends ViewGroup {
             if (mImageLoader != null) {
                 mImageLoader.onDisplayImage(getContext(),
                         childrenView,
-                        mediaItemList.get(i).thumbnailUrl);
+                        nineGridItemList.get(i).thumbnailUrl);
             }
         }
     }
@@ -128,19 +128,19 @@ public class NineGridViewGroup extends ViewGroup {
     public void setAdapter(@NonNull NineGridViewAdapter adapter) {
         // 初始化mAdapter，此类的其他方法会用到
         mAdapter = adapter;
-        List<MediaItem> mediaItemList = adapter.getMediaItemList();
+        List<NineGridItem> nineGridItemList = adapter.getNineGridItemList();
 
-        if (mediaItemList == null || mediaItemList.isEmpty()) {
+        if (nineGridItemList == null || nineGridItemList.isEmpty()) {
             this.setVisibility(GONE);
             return;
         } else {
             this.setVisibility(VISIBLE);
         }
 
-        int mediaCount = mediaItemList.size();
+        int mediaCount = nineGridItemList.size();
         if (maxMediaSize > 0 && mediaCount > maxMediaSize) {
-            mediaItemList = mediaItemList.subList(0, maxMediaSize);
-            mediaCount = mediaItemList.size();   //再次获取图片数量
+            nineGridItemList = nineGridItemList.subList(0, maxMediaSize);
+            mediaCount = nineGridItemList.size();   //再次获取图片数量
         }
 
         //默认是3列显示，行数根据图片的数量决定
@@ -155,7 +155,7 @@ public class NineGridViewGroup extends ViewGroup {
         }
 
         // 保证View的复用，避免重复创建
-        if (this.mediaItemList == null) {
+        if (this.nineGridItemList == null) {
             for (int i = 0; i < mediaCount; i++) {
                 ImageView iv = getImageView(i);
                 if (iv == null)
@@ -163,7 +163,7 @@ public class NineGridViewGroup extends ViewGroup {
                 addView(iv, generateDefaultLayoutParams());
             }
         } else {
-            int oldViewCount = this.mediaItemList.size();
+            int oldViewCount = this.nineGridItemList.size();
             int newViewCount = mediaCount;
             if (oldViewCount > newViewCount) {
                 removeViews(newViewCount, oldViewCount - newViewCount);
@@ -177,14 +177,14 @@ public class NineGridViewGroup extends ViewGroup {
             }
         }
         //修改最后一个条目，决定是否显示更多
-        if (adapter.getMediaItemList().size() > maxMediaSize) {
+        if (adapter.getNineGridItemList().size() > maxMediaSize) {
             View child = getChildAt(maxMediaSize - 1);
             if (child instanceof NineGridItemWrapperView) {
                 NineGridItemWrapperView imageView = (NineGridItemWrapperView) child;
-                imageView.setMoreNum(adapter.getMediaItemList().size() - maxMediaSize);
+                imageView.setMoreNum(adapter.getNineGridItemList().size() - maxMediaSize);
             }
         }
-        this.mediaItemList = mediaItemList;
+        this.nineGridItemList = nineGridItemList;
         requestLayout();
     }
 
@@ -198,7 +198,7 @@ public class NineGridViewGroup extends ViewGroup {
             imageView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mAdapter.onMediaItemClick(getContext(), NineGridViewGroup.this, position, mAdapter.getMediaItemList());
+                    mAdapter.onMediaItemClick(getContext(), NineGridViewGroup.this, position, mAdapter.getNineGridItemList());
                 }
             });
             imageViewList.add(imageView);

@@ -19,8 +19,8 @@ import java.util.List;
 
 import cn.edu.heuet.littlecurl.R;
 import cn.edu.heuet.littlecurl.ninegridview.base.NineGridViewAdapter;
-import cn.edu.heuet.littlecurl.ninegridview.bean.MediaItem;
-import cn.edu.heuet.littlecurl.ninegridview.ui.NineGridViewGroup;
+import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
+import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
 import cn.edu.heuet.littlecurl.qzone.bean.MyMedia;
 import cn.edu.heuet.littlecurl.qzone.bean.RecyclerViewItem;
 
@@ -115,23 +115,23 @@ public class RecyclerVidewAdapter extends RecyclerView.Adapter<RecyclerVidewAdap
                 Toast.makeText(context, "围观图标点击事件还未开发", Toast.LENGTH_SHORT).show();
             }
         });
-        holder.iv_detail_triangle.setOnClickListener(new View.OnClickListener() {
+        holder.iv_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "分享图标点击事件还未开发", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // 为适应适配器要求数据，需要单独取出图片Url
+        // 为满足九宫格适配器数据要求，需要构造对应的List
         ArrayList<MyMedia> mediaList = recyclerViewItem.getMediaList();
-        ArrayList<MediaItem> mediaItemList = new ArrayList<>();
+        ArrayList<NineGridItem> nineGridItemList = new ArrayList<>();
         for (MyMedia myMedia : mediaList) {
             String thumbnailUrl = myMedia.getImageUrl();
             String bigImageUrl = thumbnailUrl;
             String videoUrl = myMedia.getVideoUrl();
-            mediaItemList.add(new MediaItem(thumbnailUrl, bigImageUrl, videoUrl));
+            nineGridItemList.add(new NineGridItem(thumbnailUrl, bigImageUrl, videoUrl));
         }
-        NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(mediaItemList);
+        NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
         holder.nineGridViewGroup.setAdapter(nineGridViewAdapter);
     }
 

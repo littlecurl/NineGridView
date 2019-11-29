@@ -12,48 +12,48 @@ import java.io.Serializable;
 import java.util.List;
 
 import cn.edu.heuet.littlecurl.R;
-import cn.edu.heuet.littlecurl.ninegridview.bean.MediaItem;
-import cn.edu.heuet.littlecurl.ninegridview.detail.MediaDetailActivity;
-import cn.edu.heuet.littlecurl.ninegridview.ui.NineGridItemWrapperView;
-import cn.edu.heuet.littlecurl.ninegridview.ui.NineGridViewGroup;
+import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
+import cn.edu.heuet.littlecurl.ninegridview.detail.NineGridItemDetailActivity;
+import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridItemWrapperView;
+import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
 
 /**
  * 这个类是此模块的入口
  */
 public class NineGridViewAdapter {
 
-    private List<MediaItem> mediaItemList;
+    private List<NineGridItem> nineGridItemList;
 
-    public NineGridViewAdapter(List<MediaItem> mediaItemList) {
-       this.mediaItemList = mediaItemList;
+    public NineGridViewAdapter(List<NineGridItem> nineGridItemList) {
+       this.nineGridItemList = nineGridItemList;
     }
-    public List<MediaItem> getMediaItemList() {
-        return mediaItemList;
+    public List<NineGridItem> getNineGridItemList() {
+        return nineGridItemList;
     }
 
     public void onMediaItemClick(Context context, NineGridViewGroup nineGridViewGroup,
-                                 int index, List<MediaItem> mediaItemList) {
-        // 遍历 mediaItemList，计算每张图片的宽高和图片起始点
-        for (int i = 0; i < mediaItemList.size(); i++) {
-            MediaItem mediaItem = mediaItemList.get(i);
+                                 int index, List<NineGridItem> nineGridItemList) {
+        // 遍历 nineGridItemList，计算每张图片的宽高和图片起始点
+        for (int i = 0; i < nineGridItemList.size(); i++) {
+            NineGridItem nineGridItem = nineGridItemList.get(i);
             View nineGridViewItem;
             if (i < nineGridViewGroup.getMaxSize()) {
                 nineGridViewItem = nineGridViewGroup.getChildAt(i);
             } else {
                 nineGridViewItem = nineGridViewGroup.getChildAt(nineGridViewGroup.getMaxSize() - 1);
             }
-            mediaItem.nineGridViewItemWidth = nineGridViewItem.getWidth();
-            mediaItem.nineGridViewItemHeight = nineGridViewItem.getHeight();
+            nineGridItem.nineGridViewItemWidth = nineGridViewItem.getWidth();
+            nineGridItem.nineGridViewItemHeight = nineGridViewItem.getHeight();
             int[] points = new int[2];
             nineGridViewItem.getLocationInWindow(points);
-            mediaItem.nineGridViewItemX = points[0];
-            mediaItem.nineGridViewItemY = points[1];
+            nineGridItem.nineGridViewItemX = points[0];
+            nineGridItem.nineGridViewItemY = points[1];
         }
 
-        Intent intent = new Intent(context, MediaDetailActivity.class);
+        Intent intent = new Intent(context, NineGridItemDetailActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(MediaDetailActivity.MEDIA_INFO, (Serializable) mediaItemList);
-        bundle.putInt(MediaDetailActivity.CURRENT_ITEM, index);
+        bundle.putSerializable(NineGridItemDetailActivity.MEDIA_INFO, (Serializable) nineGridItemList);
+        bundle.putInt(NineGridItemDetailActivity.CURRENT_ITEM, index);
         intent.putExtras(bundle);
         context.startActivity(intent);
         Log.d("日志0","点击图片，跳转到详情");

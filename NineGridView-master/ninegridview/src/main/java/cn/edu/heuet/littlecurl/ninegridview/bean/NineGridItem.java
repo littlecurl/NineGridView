@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 /**
  * 因为既要承载 Image 又要承载 Video，将来还有可能承载 Voice
- * 概括一下就是媒体信息，所以就叫成了 MediaItem
+ * 概括一下就是媒体信息，所以就叫成了 NineGridItem
  */
-public class MediaItem implements Serializable {
+public class NineGridItem implements Serializable {
     public String thumbnailUrl;
     public String bigImageUrl;
     public int imageViewHeight;
@@ -21,16 +21,16 @@ public class MediaItem implements Serializable {
     public int nineGridViewItemX;
     public int nineGridViewItemY;
 
-    public MediaItem(String thumbnailUrl) {
+    public NineGridItem(String thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
     }
 
-    public MediaItem(String thumbnailUrl, String bigImageUrl) {
+    public NineGridItem(String thumbnailUrl, String bigImageUrl) {
         this.thumbnailUrl = thumbnailUrl;
         this.bigImageUrl = bigImageUrl;
     }
 
-    public MediaItem(String thumbnailUrl, String bigImageUrl, String videoUrl) {
+    public NineGridItem(String thumbnailUrl, String bigImageUrl, String videoUrl) {
         this.thumbnailUrl = thumbnailUrl;
         this.bigImageUrl = bigImageUrl;
         this.videoUrl = videoUrl;
@@ -126,7 +126,7 @@ public class MediaItem implements Serializable {
 
     @Override
     public String toString() {
-        return "MediaItem{" +
+        return "NineGridItem{" +
                 "imageViewY=" + imageViewY +
                 ", imageViewX=" + imageViewX +
                 ", imageViewWidth=" + imageViewWidth +

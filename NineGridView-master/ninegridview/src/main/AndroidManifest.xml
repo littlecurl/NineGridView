@@ -8,7 +8,7 @@
 
     <application>
         <activity
-            android:name="cn.edu.heuet.littlecurl.ninegridview.detail.MediaDetailActivity"
+            android:name="cn.edu.heuet.littlecurl.ninegridview.detail.NineGridItemDetailActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"

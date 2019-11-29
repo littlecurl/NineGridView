@@ -16,8 +16,8 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import java.util.List;
 
 import cn.edu.heuet.littlecurl.R;
-import cn.edu.heuet.littlecurl.ninegridview.bean.MediaItem;
-import cn.edu.heuet.littlecurl.ninegridview.ui.NineGridViewGroup;
+import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
+import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -25,22 +25,22 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
         implements PhotoViewAttacher.OnPhotoTapListener {
 
     private Context context;
-    private List<MediaItem> mediaItemList;
+    private List<NineGridItem> nineGridItemList;
     private View item_media_view;
     public final static String TAG = "ViewPager2Adapter";
 
     public ViewPager2Adapter() {
     }
 
-    public ViewPager2Adapter(Context context, List<MediaItem> mediaItemList) {
+    public ViewPager2Adapter(Context context, List<NineGridItem> nineGridItemList) {
         this.context = context;
-        this.mediaItemList = mediaItemList;
+        this.nineGridItemList = nineGridItemList;
     }
 
     @NonNull
     @Override
     public ViewPager2Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        item_media_view = LayoutInflater.from(context).inflate(R.layout.item_media, parent, false);
+        item_media_view = LayoutInflater.from(context).inflate(R.layout.item_ninegrid, parent, false);
         return new ViewHolder(item_media_view);
     }
 
@@ -60,7 +60,7 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
             photoView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
                 @Override
                 public void onPhotoTap(View view, float x, float y) {
-                    ((MediaDetailActivity) context).finishActivityAnim();
+                    ((NineGridItemDetailActivity) context).finishActivityAnim();
                 }
             });
         }
@@ -69,12 +69,12 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewPager2Adapter.ViewHolder holder, int position) {
         // 存在视频地址
-        if (existVideoUrl(mediaItemList, position)) {
+        if (existVideoUrl(nineGridItemList, position)) {
             holder.photoView.setVisibility(View.INVISIBLE);
             holder.gsyVideoPlayer.setVisibility(View.VISIBLE);
             holder.gsyVideoPlayer.setPlayTag(TAG);
             holder.gsyVideoPlayer.setUpLazy(
-                    mediaItemList.get(position).getVideoUrl(),
+                    nineGridItemList.get(position).getVideoUrl(),
                     true,
                     null,
                     null,
@@ -104,17 +104,17 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
             holder.photoView.setVisibility(View.VISIBLE);
             holder.gsyVideoPlayer.setVisibility(View.INVISIBLE);
 
-            showExcessPic(mediaItemList.get(position), holder.photoView);
+            showExcessPic(nineGridItemList.get(position), holder.photoView);
             NineGridViewGroup.getImageLoader().onDisplayImage(
                     context,
                     holder.photoView,
-                    mediaItemList.get(position).bigImageUrl);
+                    nineGridItemList.get(position).bigImageUrl);
         }
     }
 
     @Override
     public int getItemCount() {
-        return mediaItemList.size();
+        return nineGridItemList.size();
     }
 
     /**
@@ -122,22 +122,22 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
      */
     @Override
     public void onPhotoTap(View view, float x, float y) {
-        ((MediaDetailActivity) context).finishActivityAnim();
+        ((NineGridItemDetailActivity) context).finishActivityAnim();
     }
 
-    private boolean existVideoUrl(List<MediaItem> mediaItemList, int position) {
-        return !TextUtils.isEmpty(mediaItemList.get(position).getVideoUrl());
+    private boolean existVideoUrl(List<NineGridItem> nineGridItemList, int position) {
+        return !TextUtils.isEmpty(nineGridItemList.get(position).getVideoUrl());
     }
 
     /**
      * 展示过度图片
      */
-    private void showExcessPic(MediaItem mediaItem, PhotoView imageView) {
+    private void showExcessPic(NineGridItem nineGridItem, PhotoView imageView) {
         //先获取大图的缓存图片
-        Bitmap cacheImage = NineGridViewGroup.getImageLoader().getCacheImage(mediaItem.bigImageUrl);
+        Bitmap cacheImage = NineGridViewGroup.getImageLoader().getCacheImage(nineGridItem.bigImageUrl);
         //如果大图的缓存不存在,在获取小图的缓存
         if (cacheImage == null)
-            cacheImage = NineGridViewGroup.getImageLoader().getCacheImage(mediaItem.thumbnailUrl);
+            cacheImage = NineGridViewGroup.getImageLoader().getCacheImage(nineGridItem.thumbnailUrl);
         //如果没有任何缓存,使用默认图片,否者使用缓存
         if (cacheImage == null) {
             imageView.setImageResource(R.drawable.ic_default_color);

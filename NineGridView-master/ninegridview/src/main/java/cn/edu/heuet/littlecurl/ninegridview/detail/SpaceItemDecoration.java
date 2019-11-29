@@ -1,4 +1,4 @@
-package cn.edu.heuet.littlecurl.ninegridview.ui;
+package cn.edu.heuet.littlecurl.ninegridview.detail;
 
 import android.content.Context;
 import android.graphics.Rect;

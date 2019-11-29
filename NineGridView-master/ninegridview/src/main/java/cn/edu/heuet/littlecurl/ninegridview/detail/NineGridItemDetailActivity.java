@@ -26,15 +26,14 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import java.util.List;
 
 import cn.edu.heuet.littlecurl.R;
-import cn.edu.heuet.littlecurl.ninegridview.bean.MediaItem;
-import cn.edu.heuet.littlecurl.ninegridview.ui.SpaceItemDecoration;
+import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
 import uk.co.senab.photoview.PhotoView;
 
 /**
  * 重点关注 implements 的那些接口
  * 及其对应的实现方法
  */
-public class MediaDetailActivity extends Activity implements
+public class NineGridItemDetailActivity extends Activity implements
         ViewTreeObserver.OnPreDrawListener {
 
     public static final String MEDIA_INFO = "MEDIA_INFO";
@@ -43,7 +42,7 @@ public class MediaDetailActivity extends Activity implements
 
     private static RelativeLayout rootView;                            // 当前页面根布局
     private View mediaItemView;                                 // 视频或图片布局
-    private List<MediaItem> mediaItemList;                      // 视频地址集合
+    private List<NineGridItem> nineGridItemList;                      // 视频地址集合
     private int currentItem;                                    // 当前页面索引
     private int lastItem;                                       // 上一个页面索引
 
@@ -65,8 +64,8 @@ public class MediaDetailActivity extends Activity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-        context = MediaDetailActivity.this;
+        setContentView(R.layout.activity_ninegrid_itemdetail);
+        context = NineGridItemDetailActivity.this;
 
 
         viewPager2 = findViewById(R.id.viewPager2);
@@ -82,10 +81,10 @@ public class MediaDetailActivity extends Activity implements
 
         // 获取传递过来的数据
         Intent intent = getIntent();
-        mediaItemList = (List<MediaItem>) intent.getSerializableExtra(MEDIA_INFO);
+        nineGridItemList = (List<NineGridItem>) intent.getSerializableExtra(MEDIA_INFO);
         currentItem = intent.getIntExtra(CURRENT_ITEM, 0);
         // 设置ViewPager相关
-        viewPager2Adapter = new ViewPager2Adapter(this, mediaItemList);
+        viewPager2Adapter = new ViewPager2Adapter(this, nineGridItemList);
         viewPager2.addItemDecoration(new SpaceItemDecoration(this, 10));
 
         viewPager2.setAdapter(viewPager2Adapter);
@@ -106,7 +105,7 @@ public class MediaDetailActivity extends Activity implements
                 lastItem = currentItem;
                 currentItem = position;
                 // 更新底部文字
-                tv_pager.setText(String.format(getString(R.string.select), currentItem + 1, mediaItemList.size()));
+                tv_pager.setText(String.format(getString(R.string.select), currentItem + 1, nineGridItemList.size()));
 
                 // 大于0说明有播放
                 if (GSYVideoManager.instance().getPlayPosition() >= 0) {
@@ -130,7 +129,7 @@ public class MediaDetailActivity extends Activity implements
             }
         });
         viewPager2.setCurrentItem(currentItem, false);
-        tv_pager.setText(String.format(getString(R.string.select), currentItem + 1, mediaItemList.size()));
+        tv_pager.setText(String.format(getString(R.string.select), currentItem + 1, nineGridItemList.size()));
 
     }
 
@@ -173,7 +172,7 @@ public class MediaDetailActivity extends Activity implements
         final PhotoView photoView = viewPager2Adapter.getPrimaryPhotoView();
         final StandardGSYVideoPlayer gsyVideoPlayer = viewPager2Adapter.getPrimaryVideoView();
 
-        if (existVideoUrl(mediaItemList, currentItem)) {
+        if (existVideoUrl(nineGridItemList, currentItem)) {
             mediaItemView = gsyVideoPlayer;
             computeMediaViewWidthAndHeight(mediaItemView);
         } else {
@@ -181,9 +180,9 @@ public class MediaDetailActivity extends Activity implements
             computeMediaViewWidthAndHeight(mediaItemView);
         }
 
-        final MediaItem mediaItem = mediaItemList.get(currentItem);
-        final float vx = mediaItem.nineGridViewItemWidth * 1.0f / mediaItemViewRealWidth;
-        final float vy = mediaItem.nineGridViewItemHeight * 1.0f / mediaItemViewRealHeight;
+        final NineGridItem nineGridItem = nineGridItemList.get(currentItem);
+        final float vx = nineGridItem.nineGridViewItemWidth * 1.0f / mediaItemViewRealWidth;
+        final float vy = nineGridItem.nineGridViewItemHeight * 1.0f / mediaItemViewRealHeight;
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1.0f);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -193,8 +192,8 @@ public class MediaDetailActivity extends Activity implements
                 float fraction = duration > 0 ? (float) playTime / duration : 1f;
                 if (fraction > 1)
                     fraction = 1;
-                view.setTranslationX(evaluateInt(fraction, mediaItem.nineGridViewItemX + mediaItem.nineGridViewItemWidth / 2 - mediaItemView.getWidth() / 2, 0));
-                view.setTranslationY(evaluateInt(fraction, mediaItem.nineGridViewItemY + mediaItem.nineGridViewItemHeight / 2 - mediaItemView.getHeight() / 2, 0));
+                view.setTranslationX(evaluateInt(fraction, nineGridItem.nineGridViewItemX + nineGridItem.nineGridViewItemWidth / 2 - mediaItemView.getWidth() / 2, 0));
+                view.setTranslationY(evaluateInt(fraction, nineGridItem.nineGridViewItemY + nineGridItem.nineGridViewItemHeight / 2 - mediaItemView.getHeight() / 2, 0));
                 // 缩放
                 view.setScaleX(evaluateFloat(fraction, vx, 1));
                 view.setScaleY(evaluateFloat(fraction, vy, 1));
@@ -216,7 +215,7 @@ public class MediaDetailActivity extends Activity implements
         // Activity中调用适配器里的方法
         final ImageView imageView = viewPager2Adapter.getPrimaryPhotoView();
         final StandardGSYVideoPlayer gsyVideoPlayer = viewPager2Adapter.getPrimaryVideoView();
-        if (existVideoUrl(mediaItemList, currentItem)) {
+        if (existVideoUrl(nineGridItemList, currentItem)) {
             mediaItemView = gsyVideoPlayer;
             computeMediaViewWidthAndHeight(mediaItemView);
         } else {
@@ -224,9 +223,9 @@ public class MediaDetailActivity extends Activity implements
             computeMediaViewWidthAndHeight(mediaItemView);
         }
 
-        final MediaItem mediaItem = mediaItemList.get(currentItem);
-        final float vx = mediaItem.nineGridViewItemWidth * 1.0f / mediaItemViewRealWidth;
-        final float vy = mediaItem.nineGridViewItemHeight * 1.0f / mediaItemViewRealHeight;
+        final NineGridItem nineGridItem = nineGridItemList.get(currentItem);
+        final float vx = nineGridItem.nineGridViewItemWidth * 1.0f / mediaItemViewRealWidth;
+        final float vy = nineGridItem.nineGridViewItemHeight * 1.0f / mediaItemViewRealHeight;
         final ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1.0f);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -235,8 +234,8 @@ public class MediaDetailActivity extends Activity implements
                 long playTime = animation.getCurrentPlayTime();
                 float fraction = duration > 0 ? (float) playTime / duration : 1f;
                 if (fraction > 1) fraction = 1;
-                view.setTranslationX(evaluateInt(fraction, mediaItem.nineGridViewItemX + mediaItem.nineGridViewItemWidth / 2 - mediaItemView.getWidth() / 2, 0));
-                view.setTranslationY(evaluateInt(fraction, mediaItem.nineGridViewItemY + mediaItem.nineGridViewItemHeight / 2 - mediaItemView.getHeight() / 2, 0));
+                view.setTranslationX(evaluateInt(fraction, nineGridItem.nineGridViewItemX + nineGridItem.nineGridViewItemWidth / 2 - mediaItemView.getWidth() / 2, 0));
+                view.setTranslationY(evaluateInt(fraction, nineGridItem.nineGridViewItemY + nineGridItem.nineGridViewItemHeight / 2 - mediaItemView.getHeight() / 2, 0));
                 view.setScaleX(evaluateFloat(fraction, 1, vx));
                 view.setScaleY(evaluateFloat(fraction, 1, vy));
                 view.setAlpha(1 - fraction);
@@ -369,12 +368,12 @@ public class MediaDetailActivity extends Activity implements
     }
 
     /**
-     * @param mediaItemList
+     * @param nineGridItemList
      * @param position
      * @return
      */
-    private boolean existVideoUrl(List<MediaItem> mediaItemList, int position) {
-        return !TextUtils.isEmpty(mediaItemList.get(position).getVideoUrl());
+    private boolean existVideoUrl(List<NineGridItem> nineGridItemList, int position) {
+        return !TextUtils.isEmpty(nineGridItemList.get(position).getVideoUrl());
     }
 
 }

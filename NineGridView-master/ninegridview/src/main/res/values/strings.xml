@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="select">%1$s/%2$s</string>
-    <string name="videoIconText">点击播放视频</string>
-    <string name="detail_text">我发斯蒂芬是</string>
 </resources>
