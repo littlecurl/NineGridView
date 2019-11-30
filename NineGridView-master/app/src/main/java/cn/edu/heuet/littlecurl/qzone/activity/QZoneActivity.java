@@ -87,26 +87,44 @@ public class QZoneActivity extends AppCompatActivity
         MyMedia myMedia4 = new MyMedia(imgUrl1, videoUrl3);
         MyMedia myMedia5 = new MyMedia(imgUrl3, videoUrl4);
         // 再构造mediaList
-        ArrayList<MyMedia> mediaList = new ArrayList<>();
-        for (int i = 0; i < 2; i++) { // 加入10张图片
-            mediaList.add(myMedia1);
-            mediaList.add(myMedia2);
-            mediaList.add(myMedia3);
-            mediaList.add(myMedia4);
-            mediaList.add(myMedia5);
+        // 1张图片
+        ArrayList<MyMedia> mediaList1 = new ArrayList<>();
+        mediaList1.add(myMedia2);
+        // 2张图片
+        ArrayList<MyMedia> mediaList2 = new ArrayList<>();
+        mediaList2.add(myMedia1);
+        mediaList2.add(myMedia2);
+        // 4张图片
+        ArrayList<MyMedia> mediaList4 = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            mediaList4.add(myMedia1);
+            mediaList4.add(myMedia2);
         }
+        // 10张图片
+        ArrayList<MyMedia> mediaList10 = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            mediaList10.add(myMedia1);
+            mediaList10.add(myMedia2);
+            mediaList10.add(myMedia3);
+            mediaList10.add(myMedia4);
+            mediaList10.add(myMedia5);
+        }
+
         Location location = new Location();
         location.setAddress("Test Address");
         // 最后构造EvaluationItem
-        final RecyclerViewItem recyclerViewItem1 = new RecyclerViewItem(mediaList, "河北经贸大学自强社是在校学生处指导、学生资助管理中心主办下，于2008年4月15日注册成立的，一个以在校学生为主体的学生公益社团。历经十年的发展，在学生处、学生资助管理中心的大力支持下，在每一届自强人的团结努力下，自强社已经由成... ", "2019-11-02",
+        final RecyclerViewItem recyclerViewItem1 = new RecyclerViewItem(mediaList1, "河北经贸大学自强社是在校学生处指导、学生资助管理中心主办下，于2008年4月15日注册成立的，一个以在校学生为主体的学生公益社团。历经十年的发展，在学生处、学生资助管理中心的大力支持下，在每一届自强人的团结努力下，自强社已经由成... ", "2019-11-02",
                 "10080", "自强社", location, imgUrl1);
-        final RecyclerViewItem recyclerViewItem2 = new RecyclerViewItem(mediaList, "河北经贸大学信息技术学院成立于1996年，由原计算机系/经济信息系合并组建而成，是我校建设的第一批学院。", "2019-11-02",
+        final RecyclerViewItem recyclerViewItem2 = new RecyclerViewItem(mediaList2, "河北经贸大学信息技术学院成立于1996年，由原计算机系/经济信息系合并组建而成，是我校建设的第一批学院。", "2019-11-02",
                 "10080", "信息技术学院", location, imgUrl2);
-        final RecyclerViewItem recyclerViewItem3 = new RecyclerViewItem(mediaList, "河北经贸大学雷雨话剧社是河北经贸大学唯一以话剧为主，兼小品，相声等多种表演艺术形式，由一批热爱表演，热爱话剧，热爱中国传统艺术与当代流行艺术结合的同学共同组成的文艺类大型社团。雷雨话剧社坚持以追求话剧“更新颖”、“更大型”、“更专业”为奋斗目标，坚持在继承传统文化和前辈的演出经验... ", "2019-11-02",
+        final RecyclerViewItem recyclerViewItem4 = new RecyclerViewItem(mediaList4, "河北经贸大学信息技术学院成立于1996年，由原计算机系/经济信息系合并组建而成，是我校建设的第一批学院。", "2019-11-02",
+                "10080", "信息技术学院", location, imgUrl2);
+        final RecyclerViewItem recyclerViewItem10 = new RecyclerViewItem(mediaList10, "河北经贸大学雷雨话剧社是河北经贸大学唯一以话剧为主，兼小品，相声等多种表演艺术形式，由一批热爱表演，热爱话剧，热爱中国传统艺术与当代流行艺术结合的同学共同组成的文艺类大型社团。雷雨话剧社坚持以追求话剧“更新颖”、“更大型”、“更专业”为奋斗目标，坚持在继承传统文化和前辈的演出经验... ", "2019-11-02",
                 "10080", "雷雨话剧社", location, imgUrl3);
         recyclerViewItemList.add(recyclerViewItem1);
         recyclerViewItemList.add(recyclerViewItem2);
-        recyclerViewItemList.add(recyclerViewItem3);
+        recyclerViewItemList.add(recyclerViewItem4);
+        recyclerViewItemList.add(recyclerViewItem10);
     }
 
     @Override

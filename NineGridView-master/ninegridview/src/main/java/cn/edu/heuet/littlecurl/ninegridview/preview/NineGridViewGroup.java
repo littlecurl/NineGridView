@@ -28,7 +28,7 @@ public class NineGridViewGroup extends ViewGroup {
 
     private int singleMediaSize = 300;              // 单张图片时的最大大小 300 x 300,单位dp
     private float singleImageRatio = 1.0f;          // 单张图片的宽高比(宽/高)
-    private int maxMediaSize = 9;                   // 最大显示的图片数
+    private int maxGridSize = 9;                   // 最大显示的图片数
     private int gridSpacing = 3;                    // 宫格间距，单位dp
     private int mode = MODE_GRID;                   // 默认使用grid模式
 
@@ -61,7 +61,7 @@ public class NineGridViewGroup extends ViewGroup {
         gridSpacing = (int) a.getDimension(R.styleable.NineGridViewGroup_ngv_gridSpacing, gridSpacing);
         singleMediaSize = a.getDimensionPixelSize(R.styleable.NineGridViewGroup_ngv_singleMediaSize, singleMediaSize);
         singleImageRatio = a.getFloat(R.styleable.NineGridViewGroup_ngv_singleMediaRatio, singleImageRatio);
-        maxMediaSize = a.getInt(R.styleable.NineGridViewGroup_ngv_maxSize, maxMediaSize);
+        maxGridSize = a.getInt(R.styleable.NineGridViewGroup_ngv_maxSize, maxGridSize);
         mode = a.getInt(R.styleable.NineGridViewGroup_ngv_mode, mode);
         a.recycle();
 
@@ -75,9 +75,10 @@ public class NineGridViewGroup extends ViewGroup {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = 0;
         int totalWidth = width - getPaddingLeft() - getPaddingRight();
-        if (nineGridItemList != null && nineGridItemList.size() > 0) {
+        int gridNum = nineGridItemList.size();
+        if (nineGridItemList != null &&  gridNum > 0) {
             // 只有一张图片的情况
-            if (nineGridItemList.size() == 1) {
+            if (gridNum == 1) {
                 gridWidth = singleMediaSize > totalWidth ? totalWidth : singleMediaSize;
                 gridHeight = (int) (gridWidth / singleImageRatio);
                 //矫正图片显示区域大小，不允许超过最大显示范围
@@ -87,7 +88,18 @@ public class NineGridViewGroup extends ViewGroup {
                     gridHeight = singleMediaSize;
                 }
             }
-            // 有多张图片的情况
+            // 有 2 张 或 4 张图片的情况
+            else if (gridNum == 2 || gridNum == 4){
+                gridWidth = singleMediaSize > totalWidth / 2 ? totalWidth/2 : singleMediaSize;
+                gridHeight = (int) (gridWidth / singleImageRatio);
+                //矫正图片显示区域大小，不允许超过最大显示范围
+                if (gridHeight > singleMediaSize) {
+                    float ratio = singleMediaSize * 1.0f / gridHeight;
+                    gridWidth = (int) (gridWidth * ratio);
+                    gridHeight = singleMediaSize;
+                }
+            }
+            // 有其他数量多张图片的情况
             else {
                 // gridWidth = gridHeight = (totalWidth - gridSpacing * (columnCount - 1)) / columnCount;
                 //这里无论是几张图片，宽高都按总宽度的 1/3
@@ -137,18 +149,18 @@ public class NineGridViewGroup extends ViewGroup {
             this.setVisibility(VISIBLE);
         }
 
-        int mediaCount = nineGridItemList.size();
-        if (maxMediaSize > 0 && mediaCount > maxMediaSize) {
-            nineGridItemList = nineGridItemList.subList(0, maxMediaSize);
-            mediaCount = nineGridItemList.size();   //再次获取图片数量
+        int gridCount = nineGridItemList.size();
+        if (maxGridSize > 0 && gridCount > maxGridSize) {
+            nineGridItemList = nineGridItemList.subList(0, maxGridSize);
+            gridCount = nineGridItemList.size();   //再次获取图片数量
         }
 
         //默认是3列显示，行数根据图片的数量决定
-        rowCount = mediaCount / 3 + (mediaCount % 3 == 0 ? 0 : 1);
+        rowCount = gridCount / 3 + (gridCount % 3 == 0 ? 0 : 1);
         columnCount = 3;
         //grid模式下，显示4张使用2X2模式
         if (mode == MODE_GRID) {
-            if (mediaCount == 4) {
+            if (gridCount == 4) {
                 rowCount = 2;
                 columnCount = 2;
             }
@@ -156,7 +168,7 @@ public class NineGridViewGroup extends ViewGroup {
 
         // 保证View的复用，避免重复创建
         if (this.nineGridItemList == null) {
-            for (int i = 0; i < mediaCount; i++) {
+            for (int i = 0; i < gridCount; i++) {
                 ImageView iv = getImageView(i);
                 if (iv == null)
                     return;
@@ -164,7 +176,7 @@ public class NineGridViewGroup extends ViewGroup {
             }
         } else {
             int oldViewCount = this.nineGridItemList.size();
-            int newViewCount = mediaCount;
+            int newViewCount = gridCount;
             if (oldViewCount > newViewCount) {
                 removeViews(newViewCount, oldViewCount - newViewCount);
             } else if (oldViewCount < newViewCount) {
@@ -177,14 +189,15 @@ public class NineGridViewGroup extends ViewGroup {
             }
         }
         //修改最后一个条目，决定是否显示更多
-        if (adapter.getNineGridItemList().size() > maxMediaSize) {
-            View child = getChildAt(maxMediaSize - 1);
+        if (adapter.getNineGridItemList().size() > maxGridSize) {
+            View child = getChildAt(maxGridSize - 1);
             if (child instanceof NineGridItemWrapperView) {
                 NineGridItemWrapperView imageView = (NineGridItemWrapperView) child;
-                imageView.setMoreNum(adapter.getNineGridItemList().size() - maxMediaSize);
+                imageView.setMoreNum(adapter.getNineGridItemList().size() - maxGridSize);
             }
         }
         this.nineGridItemList = nineGridItemList;
+        // 请求重新布局
         requestLayout();
     }
 
@@ -198,7 +211,7 @@ public class NineGridViewGroup extends ViewGroup {
             imageView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mAdapter.onMediaItemClick(getContext(), NineGridViewGroup.this, position, mAdapter.getNineGridItemList());
+                    mAdapter.onNineGridItemClick(getContext(), NineGridViewGroup.this, position, mAdapter.getNineGridItemList());
                 }
             });
             imageViewList.add(imageView);
@@ -218,11 +231,11 @@ public class NineGridViewGroup extends ViewGroup {
 
     /** 设置最大图片数 */
     public void setMaxSize(int maxSize) {
-        maxMediaSize = maxSize;
+        maxGridSize = maxSize;
     }
 
     public int getMaxSize() {
-        return maxMediaSize;
+        return maxGridSize;
     }
 
     public static void setImageLoader(ImageLoader imageLoader) {

@@ -30,8 +30,10 @@ import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
 import uk.co.senab.photoview.PhotoView;
 
 /**
- * 重点关注 implements 的那些接口
- * 及其对应的实现方法
+ * 图片详情呈现
+ * 用到了ViewPager2
+ * ViewPager2是谷歌2019年新推出的控件
+ * 使用方法仅仅需要一个RecyclerView的适配器即可，别无其他
  */
 public class NineGridItemDetailActivity extends Activity implements
         ViewTreeObserver.OnPreDrawListener {
@@ -40,11 +42,11 @@ public class NineGridItemDetailActivity extends Activity implements
     public static final String CURRENT_ITEM = "CURRENT_ITEM";
     private static final int ANIMATE_DURATION = 200;
 
-    private static RelativeLayout rootView;                            // 当前页面根布局
-    private View mediaItemView;                                 // 视频或图片布局
-    private List<NineGridItem> nineGridItemList;                      // 视频地址集合
-    private int currentItem;                                    // 当前页面索引
-    private int lastItem;                                       // 上一个页面索引
+    private static RelativeLayout rootView;         // 当前页面根布局
+    private View mediaItemView;                     // 视频或图片布局
+    private List<NineGridItem> nineGridItemList;    // 视频地址集合
+    private int currentItem;                        // 当前页面索引
+    private int lastItem;                           // 上一个页面索引
 
     private ViewPager2Adapter viewPager2Adapter;
     private int mediaItemViewRealHeight;
@@ -66,8 +68,6 @@ public class NineGridItemDetailActivity extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ninegrid_itemdetail);
         context = NineGridItemDetailActivity.this;
-
-
         viewPager2 = findViewById(R.id.viewPager2);
         tv_pager = findViewById(R.id.tv_pager);
         rootView = findViewById(R.id.rootView);
@@ -83,57 +83,63 @@ public class NineGridItemDetailActivity extends Activity implements
         Intent intent = getIntent();
         nineGridItemList = (List<NineGridItem>) intent.getSerializableExtra(MEDIA_INFO);
         currentItem = intent.getIntExtra(CURRENT_ITEM, 0);
-        // 设置ViewPager相关
+        // onCreate中更新底部文字
+        tv_pager.setText(String.format(getString(R.string.select), currentItem + 1, nineGridItemList.size()));
+        // ViewPager2适配器，本质是RecyclerView的适配器
         viewPager2Adapter = new ViewPager2Adapter(this, nineGridItemList);
-        viewPager2.addItemDecoration(new SpaceItemDecoration(this, 10));
-
         viewPager2.setAdapter(viewPager2Adapter);
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+        /**************  下面这句必须写在设置完适配器之后，因为必须先有数据，才能跳转到具体的页面 **************/
+        // onCreate中设置当前显示页面
+        viewPager2.setCurrentItem(currentItem, false);
+        /******************************************************************************************************/
+        // 增加装饰（每一页左右padding）
+        viewPager2.addItemDecoration(new SpaceItemDecoration(this, 10));
+        // 监听ViewPager2的页面切换事件
+        viewPager2.registerOnPageChangeCallback(onPageChangeCallback);
+    }
 
-            }
+    // 实现页面切换的监听事件，为防止onCreate()方法过于臃肿，把它写到外面了
+    ViewPager2.OnPageChangeCallback onPageChangeCallback = new ViewPager2.OnPageChangeCallback() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels);
 
-            /**
-             * 页面切换结束位置: position
-             */
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                // 记录位置变化
-                lastItem = currentItem;
-                currentItem = position;
-                // 更新底部文字
-                tv_pager.setText(String.format(getString(R.string.select), currentItem + 1, nineGridItemList.size()));
-
-                // 大于0说明有播放
-                if (GSYVideoManager.instance().getPlayPosition() >= 0) {
-                    //当前播放的位置
-                    int currentPlayingPosition = GSYVideoManager.instance().getPlayPosition();
-                    if (currentPlayingPosition != currentItem) {
-                        GSYVideoManager.onPause();
-
-                        if (!GSYVideoManager.isFullState((Activity) context)) {
-                            GSYVideoManager.releaseAllVideos();
-                            viewPager2Adapter.notifyDataSetChanged();
-                        }
+        }
+        /**
+         * 页面切换结束位置: position
+         */
+        @SuppressLint("StringFormatMatches")
+        @Override
+        public void onPageSelected(int position) {
+            super.onPageSelected(position);
+            // 记录位置变化
+            lastItem = currentItem;
+            currentItem = position;
+            // 更新底部文字
+            tv_pager.setText(String.format(getString(R.string.select), currentItem + 1, nineGridItemList.size()));
+            // 大于0说明有播放
+            if (GSYVideoManager.instance().getPlayPosition() >= 0) {
+                //当前播放的位置
+                int currentPlayingPosition = GSYVideoManager.instance().getPlayPosition();
+                if (currentPlayingPosition != currentItem) {
+                    GSYVideoManager.onPause();
+                    if (!GSYVideoManager.isFullState((Activity) context)) {
+                        GSYVideoManager.releaseAllVideos();
+                        viewPager2Adapter.notifyDataSetChanged();
                     }
                 }
             }
+        }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                super.onPageScrollStateChanged(state);
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            super.onPageScrollStateChanged(state);
+        }
+    };
 
-            }
-        });
-        viewPager2.setCurrentItem(currentItem, false);
-        tv_pager.setText(String.format(getString(R.string.select), currentItem + 1, nineGridItemList.size()));
-
-    }
-
-    //-------------------------------- Activity生命周期相关 --------------------------------
+    /**
+     * 返回箭头
+     */
     @Override
     public void onBackPressed() {
         if (GSYVideoManager.backFromWindowFull(this)) {
@@ -141,7 +147,7 @@ public class NineGridItemDetailActivity extends Activity implements
         }
         super.onBackPressed();
     }
-
+    //-------------------------------- Activity生命周期相关 --------------------------------
     @Override
     protected void onPause() {
         super.onPause();
@@ -154,16 +160,14 @@ public class NineGridItemDetailActivity extends Activity implements
         GSYVideoManager.onResume(false);
     }
 
-    //-------------------------------- 动画相关方法 ↓↓↓ --------------------------------
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         GSYVideoManager.releaseAllVideos();
     }
-
+    //-------------------------------- 动画相关方法 ↓↓↓ --------------------------------
     /**
-     * 绘制前开始动画
+     * 点击九宫格之后，绘制之前 的动画
      */
     @Override
     public boolean onPreDraw() {
@@ -208,11 +212,10 @@ public class NineGridItemDetailActivity extends Activity implements
     }
 
     /**
-     * activity的退场动画
+     * 单击图片之后，退出详情页的动画
      */
     public void finishActivityAnim() {
         final View view = viewPager2Adapter.getPrimaryItem();
-        // Activity中调用适配器里的方法
         final ImageView imageView = viewPager2Adapter.getPrimaryPhotoView();
         final StandardGSYVideoPlayer gsyVideoPlayer = viewPager2Adapter.getPrimaryVideoView();
         if (existVideoUrl(nineGridItemList, currentItem)) {
@@ -222,7 +225,6 @@ public class NineGridItemDetailActivity extends Activity implements
             mediaItemView = imageView;
             computeMediaViewWidthAndHeight(mediaItemView);
         }
-
         final NineGridItem nineGridItem = nineGridItemList.get(currentItem);
         final float vx = nineGridItem.nineGridViewItemWidth * 1.0f / mediaItemViewRealWidth;
         final float vy = nineGridItem.nineGridViewItemHeight * 1.0f / mediaItemViewRealHeight;
@@ -233,7 +235,8 @@ public class NineGridItemDetailActivity extends Activity implements
                 long duration = animation.getDuration();
                 long playTime = animation.getCurrentPlayTime();
                 float fraction = duration > 0 ? (float) playTime / duration : 1f;
-                if (fraction > 1) fraction = 1;
+                if (fraction > 1)
+                    fraction = 1;
                 view.setTranslationX(evaluateInt(fraction, nineGridItem.nineGridViewItemX + nineGridItem.nineGridViewItemWidth / 2 - mediaItemView.getWidth() / 2, 0));
                 view.setTranslationY(evaluateInt(fraction, nineGridItem.nineGridViewItemY + nineGridItem.nineGridViewItemHeight / 2 - mediaItemView.getHeight() / 2, 0));
                 view.setScaleX(evaluateFloat(fraction, 1, vx));

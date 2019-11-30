@@ -1,6 +1,8 @@
-Android实现九宫格图片+视频混合展示（仿QQ空间）
+# Android实现九宫格图片+视频混合展示（仿QQ空间）
 
 [TOC]
+
+<img src="image/catalog.png"/>
 
 ## 写在前面
 
@@ -225,8 +227,10 @@ JavaBean就相当于一个接收数据的容器，现在容器有了，我们需
 
 ​		因为我没有后台，所以数据是我手动设置。
 
-```java
- // 自定义的测试数据（假装这是网络请求并解析后的数据）
+<pre>
+    <details>
+    	<summary>👈点击展开 | 这些内容可以略过，故而折叠起来了</summary>
+// 自定义的测试数据（假装这是网络请求并解析后的数据）
 private void loadMyTestDate(){
     // 先构造MyMedia
     String imgUrl1 = "http://i2.tiimg.com/702441/6e3d61b352409f34.png";
@@ -236,7 +240,6 @@ private void loadMyTestDate(){
     MyMedia myMedia1 = new MyMedia(imgUrl1,videoUrl);
     MyMedia myMedia2 = new MyMedia(imgUrl2);
     MyMedia myMedia3 = new MyMedia(imgUrl3);
-
     // 再构造mediaList
     ArrayList<MyMedia> mediaList = new ArrayList<>();
     for (int i = 0; i < 3; i++) { // 加入9张图片
@@ -257,9 +260,8 @@ private void loadMyTestDate(){
     RecyclerViewItemList.add(RecyclerViewItem2);
     RecyclerViewItemList.add(RecyclerViewItem3);
 }
-```
-
-其实上面这一大块代码的目的就是构造出来3个要展示的空间动态RecyclerViewItem并把它们放到RecyclerViewItemList中，不过，在构造RecyclerViewItem之前，我们需要先构造好MyMedia，再构造好mediaList。
+    </details>
+</pre>
 
 通过QZoneActivity我们可以拿到所有需要展示的数据，但这仅仅是数据，我们需要把数据和具体的UI控件进行绑定。
 
@@ -268,6 +270,7 @@ private void loadMyTestDate(){
 #### 1.1 Glide框架的简单使用
 
 ```java
+// 使用前记得先添加dependency
 Context context = getApplicationContext();
 String url = "图片url";
 ImageView imageView = findViewById(R.id.iv);
@@ -275,7 +278,7 @@ ImageView imageView = findViewById(R.id.iv);
 Glide.with(context).load(url).into(imageView); // 一行代码指的是这一行
 ```
 
-​		但是，我们要呈现的界面可不仅仅只有一个图片。
+​		但是，我们要呈现的界面可不仅仅只有一张图片。
 
 ​		我们要呈现的是一个可以滑动的RecyclerView或者ListView，因为这两个控件一般需要把很多UI控件和很多数据进行绑定，如果全都写在一个类里面，一是类显得过于臃肿，不好理解；二是代码太密集，不便快速定位问题；三是代码耦合度太高，不符合优秀的编程思想（这也是产生前面两个问题的终极原因）。
 
@@ -318,20 +321,20 @@ Adapter中的代码细节就不过多讲了，天下所有的适配器代码逻�
 <pre>
     <details>
     	<summary>👈点击展开 | 这些内容可以略过，故而折叠起来了</summary>
-    	public class RecyclerVidewAdapter extends RecyclerView.Adapter<RecyclerVidewAdapter.ViewHolder> {
+public class RecyclerVidewAdapter extends RecyclerView.Adapter<RecyclerVidewAdapter.ViewHolder> {
     private Context context;
     private List<RecyclerViewItem> recyclerViewItemList;
     public RecyclerVidewAdapter() {
     }
     /**
-     * 接受外部传来的数据
+     * 1、接收外部传来的数据
      */
     public RecyclerVidewAdapter(Context context, List<RecyclerViewItem> recyclerViewItemList) {
         this.context = context;
         this.recyclerViewItemList = recyclerViewItemList;
     }
     /**
-     * 填充视图
+     * 2、填充布局
      */
     @NonNull
     @Override
@@ -340,7 +343,7 @@ Adapter中的代码细节就不过多讲了，天下所有的适配器代码逻�
         return new ViewHolder(view);
     }
     /**
-     * 获取控件
+     * 3、声明并初始化布局中的控件
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView avatar;
@@ -375,7 +378,7 @@ Adapter中的代码细节就不过多讲了，天下所有的适配器代码逻�
         }
     }
     /**
-     * 绑定控件
+     * 4、控件上绑定数据
      */
     @Override
     public void onBindViewHolder(@NonNull RecyclerVidewAdapter.ViewHolder holder, int position) {
@@ -417,6 +420,7 @@ Adapter中的代码细节就不过多讲了，天下所有的适配器代码逻�
         NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
         holder.nineGridViewGroup.setAdapter(nineGridViewAdapter);
     }
+    // 5、返回Item个数
     @Override
     public int getItemCount() {
         return recyclerViewItemList.size();
@@ -433,6 +437,18 @@ Adapter中的代码细节就不过多讲了，天下所有的适配器代码逻�
 }
     </details>
 </pre>
+
+在上面折叠的代码中，我有标记好方法的顺序，虽然一个类中，方法的顺序和功能的实现没有联系。但是我推荐你像我一样，把方法都按照这个顺序来放置，因为这样更符合逻辑：
+
+1、适配器的构造方法，接收外部传来的数据
+
+2、填充布局，onCreateViewHolder()
+
+3、声明并初始化布局中的控件，ViewHolder类
+
+4、控件上绑定数据，onBindViewHolder()
+
+5、返回Item的个数，getItemCount()
 
 
 
@@ -543,27 +559,324 @@ public void onNineGridItemClick(Context context, NineGridViewGroup nineGridViewG
 
 要想解开这个疑惑，详情见<a href="#customView">自定义View</a>
 
+话说回来图片详情呈现，我们用到了ViewPager2，这是Google公司在2019年新推出的控件，我用的这一版是1.0.0稳定版同时也是2019-11-30截止最新版。
+
+官方说：如果可以的话，最好使用ViewPager2代替ViewPager，因为它简单，高效。
+
+原先ViewPager的实现最经典的就是结合Fragment一起使用。现在ViewPager2可以不用实现Fragment，仅仅写一个RecyclerView的适配器，就可以了。
+
+适配器的具体内容放到下一小节讲。这一节来看看关于ViewPager2的页面切换监听是如何实现的。
+
+首先，我们需要在onCreate()方法中注册一个回调方法
+
+```java
+ viewPager2.registerOnPageChangeCallback(onPageChangeCallback);
+```
+
+为了防止onCreate()方法过于臃肿，把它的实现写到外面了
+
+```java
+ViewPager2.OnPageChangeCallback onPageChangeCallback = new ViewPager2.OnPageChangeCallback() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+        }
+        /**
+         * 页面切换结束位置: position
+         */
+        @SuppressLint("StringFormatMatches")
+        @Override
+        public void onPageSelected(int position) {
+            super.onPageSelected(position);
+            // 记录位置变化
+            lastItem = currentItem;
+            currentItem = position;
+            // 更新底部文字
+            tv_pager.setText(String.format(getString(R.string.select), currentItem + 1, nineGridItemList.size()));
+            // 大于0说明有播放
+            if (GSYVideoManager.instance().getPlayPosition() >= 0) {
+                //当前播放的位置
+                int currentPlayingPosition = GSYVideoManager.instance().getPlayPosition();
+                if (currentPlayingPosition != currentItem) {
+                    GSYVideoManager.onPause();
+                    if (!GSYVideoManager.isFullState((Activity) context)) {
+                        GSYVideoManager.releaseAllVideos();
+                        viewPager2Adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        }
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            super.onPageScrollStateChanged(state);
+        }
+    };
+```
+
+这里有三个方法被重写了
+
+```java
+public void onPageScrolled()
+public void onPageSelected(int position)
+public void onPageScrollStateChanged()    
+```
+
+我们只用到了中间这一个。这个方法带有一个参数position，它代表我们想要去的位置，也就是页面切换结束的位置。
+
+所以，在切换之前，我们先把当前的位置记录一下。因为我们只能一页一页的切换，所以只需要把当前页面的位置+1就是下一页的序号了，然后更新底部文字。
+
+接下来，我们要判断，如果有视频正在播放的话，看一下是不是当前位置正在播放视频。如果不是，就把正在播放的视频暂停，回收资源。
+
+至于其他两个方法，这里没有用到（其实是我还没有掌握：）
+
 ### 6、ViewPager2Adapter.java
 
-九宫格图片详情的呈现（ViewPager2 的具体使用）
+上面说到了谷歌官方2019年推出的新控件ViewPager2需要且仅仅需要一个RecyclerView的视频器就能实现页面切换。所以从这个适配器类的声明方式也可以看出来，其实他就是一个RecyclerView适配器
 
-//TODO
+```java
+public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.ViewHolder>
+```
+
+既然是RecyclerView的适配器，那么代码的写法就固定了，还是那五步
+
+1、适配器的构造方法，接收外部传来的数据
+
+2、填充布局，onCreateViewHolder()
+
+3、声明并初始化布局中的控件，ViewHolder类
+
+4、控件上绑定数据，onBindViewHolder()
+
+5、返回Item的个数，getItemCount()
+
+这里，我们重点关注一下第4步onBindViewHolder()
+
+```java
+@Override
+public void onBindViewHolder(@NonNull ViewPager2Adapter.ViewHolder holder, int position) {
+    // 存在视频地址
+    if (existVideoUrl(nineGridItemList, position)) {
+        holder.photoView.setVisibility(View.INVISIBLE);
+        holder.gsyVideoPlayer.setVisibility(View.VISIBLE);
+        holder.gsyVideoPlayer.setPlayTag(TAG);
+        holder.gsyVideoPlayer.setUpLazy(
+            nineGridItemList.get(position).getVideoUrl(),
+            true,
+            null,
+            null,
+            "");
+        // 隐藏title
+        holder.gsyVideoPlayer.getTitleTextView().setVisibility(View.GONE);
+        // 隐藏返回键
+        holder.gsyVideoPlayer.getBackButton().setVisibility(View.GONE);
+        // 设置全屏按键功能
+        holder.gsyVideoPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.gsyVideoPlayer.startWindowFullscreen(context, false, true);
+            }
+        });
+        // 防止错位设置
+        holder.gsyVideoPlayer.setPlayPosition(position);
+        // 是否根据视频尺寸，自动选择竖屏全屏或者横屏全屏
+        holder.gsyVideoPlayer.setAutoFullWithSize(true);
+        // 音频焦点冲突时是否释放
+        holder.gsyVideoPlayer.setReleaseWhenLossAudio(false);
+        // 全屏动画
+        holder.gsyVideoPlayer.setShowFullAnimation(true);
+        // 小屏时不触摸滑动
+        holder.gsyVideoPlayer.setIsTouchWiget(false);
+    } else {
+        holder.photoView.setVisibility(View.VISIBLE);
+        holder.gsyVideoPlayer.setVisibility(View.INVISIBLE);
+
+        showExcessPic(nineGridItemList.get(position), holder.photoView);
+        NineGridViewGroup.getImageLoader().onDisplayImage(
+            context,
+            holder.photoView,
+            nineGridItemList.get(position).bigImageUrl);
+    }
+}
+```
+
+核心就是一个if条件判断语句，如果我们接收到的数据中，当前Item存在视频地址，那么就去播放视频，否则去呈现图片的大图。至于视频播放的那部分代码，是我从GSYVideoPlayer的Github地址上Copy过来的。人家专门说到了如何在列表里使用。
 
 ### 7、<a name="customView">自定义View</a>
 
 ### NineGridViewGroup.java
 
-自定义九宫格布局，在重写的onLayout里面实现了图片小图的展示 Line109
+其实整个框架的核心就是这个类。自定义View这里我也不是很熟练，就说说我的理解吧。
 
-如果是视频的话，应该在这里改造小图展示的方式
+因为我们需要呈现一个九宫格，算是一组基本的控件，所以需要继承ViewGroup
 
-同时，这里的getImageView()方法设置了每张图片的点击事件，会将当前点击的position传递给调用的NineGridViewAdapter.java中的onNineGridItemClick()方法，
+```java
+public class NineGridViewGroup extends ViewGroup
+```
 
+又因为ViewGroup是个抽象类，里面有个抽象方法onLayout()，根据Java规定，实现类必须实现抽象类中的抽象方法，所以我们这里必须去实现onLayout(),下面代码都是前辈写的，我们一起来欣赏一下。
 
+### onLayout()
 
+```java
+@Override
+protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    if (nineGridItemList == null) return;
+    int childrenCount = nineGridItemList.size();
+    for (int i = 0; i < childrenCount; i++) {
+        ImageView childrenView = (ImageView) getChildAt(i);
+        int rowNum = i / columnCount;
+        int columnNum = i % columnCount;
+        int left = (gridWidth + gridSpacing) * columnNum + getPaddingLeft();
+        int top = (gridHeight + gridSpacing) * rowNum + getPaddingTop();
+        int right = left + gridWidth;
+        int bottom = top + gridHeight;
+        childrenView.layout(left, top, right, bottom);
+        if (mImageLoader != null) {
+            mImageLoader.onDisplayImage(getContext(),
+                                        childrenView,
+                                        nineGridItemList.get(i).thumbnailUrl);
+        }
+    }
+}
+```
 
+通过观察代码我们可以发现，onLayout()核心代码就是通过一个for循环，生成了多个ImageView，同时计算并规定了每个ImageView的上下左右的坐标位置。
 
+这里，为了直观，我手画了一个草图，大家可以看着理解一下代码中各个参数的意思
 
+需要注意一点就是代码中的rowNum和columNum都是从0开始算起的。
+
+<img src="image\image20191130124258942.png" width=500 height=600/> 
+
+考虑到如果只有一张图片的话，不应该显示在九宫格的左上角，而是单独显示一张图片；只有两张或四张图片的话，应该两张图片占满宽度。
+
+所以，我们必须重写一下onMeasure()方法，下面的代码也是前辈写的。我们晚辈需要做的就是，欣赏，学习，模仿。（适配2张和4张图片相关代码是我加上去的<img src="image/ku.png" />）
+
+### onMeasure()
+
+```java
+@Override
+protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    // 获取总宽度,包含padding值
+    int width = MeasureSpec.getSize(widthMeasureSpec);
+    int height = 0;
+    int totalWidth = width - getPaddingLeft() - getPaddingRight();
+    int gridNum = nineGridItemList.size();
+    if (nineGridItemList != null &&  gridNum > 0) {
+        // 只有一张图片的情况
+        if (gridNum == 1) {
+            gridWidth = singleMediaSize > totalWidth ? totalWidth : singleMediaSize;
+            gridHeight = (int) (gridWidth / singleImageRatio);
+            //矫正图片显示区域大小，不允许超过最大显示范围
+            if (gridHeight > singleMediaSize) {
+                float ratio = singleMediaSize * 1.0f / gridHeight;
+                gridWidth = (int) (gridWidth * ratio);
+                gridHeight = singleMediaSize;
+            }
+        }
+        // 有 2 张 或 4 张图片的情况
+        else if (gridNum == 2 || gridNum == 4){
+            gridWidth = singleMediaSize > totalWidth / 2 ? totalWidth/2 : singleMediaSize;
+            gridHeight = (int) (gridWidth / singleImageRatio);
+            //矫正图片显示区域大小，不允许超过最大显示范围
+            if (gridHeight > singleMediaSize) {
+                float ratio = singleMediaSize * 1.0f / gridHeight;
+                gridWidth = (int) (gridWidth * ratio);
+                gridHeight = singleMediaSize;
+            }
+        }
+        // 有其他数量多张图片的情况
+        else {
+            // gridWidth = gridHeight = (totalWidth - gridSpacing * (columnCount - 1)) / columnCount;
+            //这里无论是几张图片，宽高都按总宽度的 1/3
+            gridHeight = (totalWidth - gridSpacing * 2) / 3;
+            gridWidth = gridHeight;
+        }
+        width = gridWidth * columnCount + gridSpacing * (columnCount - 1) + getPaddingLeft() + getPaddingRight();
+        height = gridHeight * rowCount + gridSpacing * (rowCount - 1) + getPaddingTop() + getPaddingBottom();
+    }
+    // 存储计算得到的ViewGroup的宽高
+    setMeasuredDimension(width, height);
+}
+```
+
+自定义View的最后一点，我们控件要想接收数据，需要写一个适配器来作为数据的入口，这样，别人在用我们自定义View的时候，就能像使用RecyclerView / ListView一样，写个适配器，设置给对应的控件。
+
+### setAdapter()
+
+```java
+/**
+     * 设置适配器
+     * */
+public void setAdapter(@NonNull NineGridViewAdapter adapter) {
+    // 初始化mAdapter，此类的其他方法会用到
+    mAdapter = adapter;
+    List<NineGridItem> nineGridItemList = adapter.getNineGridItemList();
+
+    if (nineGridItemList == null || nineGridItemList.isEmpty()) {
+        this.setVisibility(GONE);
+        return;
+    } else {
+        this.setVisibility(VISIBLE);
+    }
+
+    int gridCount = nineGridItemList.size();
+    if (maxGridSize > 0 && gridCount > maxGridSize) {
+        nineGridItemList = nineGridItemList.subList(0, maxGridSize);
+        gridCount = nineGridItemList.size();   //再次获取图片数量
+    }
+
+    //默认是3列显示，行数根据图片的数量决定
+    rowCount = gridCount / 3 + (gridCount % 3 == 0 ? 0 : 1);
+    columnCount = 3;
+    //grid模式下，显示4张使用2X2模式
+    if (mode == MODE_GRID) {
+        if (gridCount == 4) {
+            rowCount = 2;
+            columnCount = 2;
+        }
+    }
+
+    // 保证View的复用，避免重复创建
+    if (this.nineGridItemList == null) {
+        for (int i = 0; i < gridCount; i++) {
+            ImageView iv = getImageView(i);
+            if (iv == null)
+                return;
+            addView(iv, generateDefaultLayoutParams());
+        }
+    } else {
+        int oldViewCount = this.nineGridItemList.size();
+        int newViewCount = gridCount;
+        if (oldViewCount > newViewCount) {
+            removeViews(newViewCount, oldViewCount - newViewCount);
+        } else if (oldViewCount < newViewCount) {
+            for (int i = oldViewCount; i < newViewCount; i++) {
+                ImageView iv = getImageView(i);
+                if (iv == null)
+                    return;
+                addView(iv, generateDefaultLayoutParams());
+            }
+        }
+    }
+    //修改最后一个条目，决定是否显示更多
+    if (adapter.getNineGridItemList().size() > maxGridSize) {
+        View child = getChildAt(maxGridSize - 1);
+        if (child instanceof NineGridItemWrapperView) {
+            NineGridItemWrapperView imageView = (NineGridItemWrapperView) child;
+            imageView.setMoreNum(adapter.getNineGridItemList().size() - maxGridSize);
+        }
+    }
+    this.nineGridItemList = nineGridItemList;
+    // 请求重新布局
+    requestLayout();
+}
+```
+
+这种自定义View的适配器写起来都是毫无章法，不像官方的RecyclerViewAdapter和BaseAdapter那样，都规定好了第一步写啥，第二步写啥。
+
+只能去记忆、积累了，或许写的多了就会了。
 
 ## 总结
 
@@ -592,13 +905,11 @@ int width = MeasureSpec.getSize(widthMeasureSpec);
 
 接下来，有请翠花上酸~~上图片<img src="image/yiwen.png"/>
 
-<img src="image\1574222088154.png" />
+<img src="image\process.jpg" width=800 height=1000 />
 
 
 
-
-
-
+洋洋洒洒写了8k+字，还有一些比如属性动画还没有写到。由于我还没有完全掌握，这里就先刨个坑吧，以后熟练了再来填坑。
 
 
 
@@ -624,8 +935,6 @@ int width = MeasureSpec.getSize(widthMeasureSpec);
 | 13   | CSDN   | [code丶forward](https://blog.csdn.net/xingpidong)            | [《Android视频播放之ViewPager+VideoView》](https://blog.csdn.net/xingpidong/article/details/52933185) |
 | 14   | Github | [CarGuo](https://github.com/CarGuo)                          | [《GSYVideoPlayer》](https://github.com/CarGuo/GSYVideoPlayer) |
 |      |        |                                                              |                                                              |
-|      |        |                                                              |                                                              |
-|      |        |                                                              |                                                              |
 | ...  | ...    | 还有很多大佬<br />没有记住名字                               | 很多很多优秀的文章，我没顾上搬到这里，在此一并表示感谢！     |
 
 另外感谢一些工具、文档、资料网站
@@ -633,7 +942,6 @@ int width = MeasureSpec.getSize(widthMeasureSpec);
 1. PC版QQ	  [Ctrl+Alt+A截长图工具]()
 2. ProcessOn   [在线画流程图]()
 3. 多吉搜索　　[号称要干掉百度的不追踪广告少的搜索引擎]()
-4. Android开发文档  [android-doc](https://www.android-doc.com/index.html)
 
 还有一些Android学习站点推荐
 

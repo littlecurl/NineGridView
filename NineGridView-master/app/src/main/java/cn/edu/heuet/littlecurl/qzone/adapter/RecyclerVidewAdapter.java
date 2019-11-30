@@ -98,7 +98,7 @@ public class RecyclerVidewAdapter extends RecyclerView.Adapter<RecyclerVidewAdap
         RecyclerViewItem recyclerViewItem = recyclerViewItemList.get(position);
 
         // 往控件上绑定数据
-        setImage(context, holder.avatar, recyclerViewItem.getHeadImageUrl());
+        NineGridViewGroup.getImageLoader().onDisplayImage(context,holder.avatar,recyclerViewItem.getHeadImageUrl());
         holder.tv_username.setText(recyclerViewItem.getNickName());
         holder.tv_createTime.setText(recyclerViewItem.getCreateTime());
         holder.tv_content.setText(recyclerViewItem.getContent());
@@ -138,15 +138,5 @@ public class RecyclerVidewAdapter extends RecyclerView.Adapter<RecyclerVidewAdap
     @Override
     public int getItemCount() {
         return recyclerViewItemList.size();
-    }
-
-    // 通过图片的Url给ImageView控件设置对应的图片
-    private void setImage(Context context, ImageView imageView, String url) {
-        Glide.with(context)
-                .load(url)
-                .placeholder(R.drawable.ic_default_color)
-                .error(R.drawable.ic_default_color)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imageView);
     }
 }

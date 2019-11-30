@@ -31,8 +31,8 @@ public class NineGridViewAdapter {
         return nineGridItemList;
     }
 
-    public void onMediaItemClick(Context context, NineGridViewGroup nineGridViewGroup,
-                                 int index, List<NineGridItem> nineGridItemList) {
+    public void onNineGridItemClick(Context context, NineGridViewGroup nineGridViewGroup,
+                                    int index, List<NineGridItem> nineGridItemList) {
         // 遍历 nineGridItemList，计算每张图片的宽高和图片起始点
         for (int i = 0; i < nineGridItemList.size(); i++) {
             NineGridItem nineGridItem = nineGridItemList.get(i);
