@@ -2,7 +2,7 @@
 
 [TOC]
 
-<img src="image/catalog.png"  width=60 height=100/>
+<img src="image/catalog.png"/>
 
 ## 写在前面
 
@@ -923,7 +923,7 @@ int width = MeasureSpec.getSize(widthMeasureSpec);
 
 <p  style="text-align:center;"> <img src="image\xidatui.gif"/><br /><b>衷心感谢以下前辈们，致敬！</b></p>
 
-
+<hr />
 
 | 序号 | 来源   | 作者                                                         | 标题                                                         |
 | ---- | ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
