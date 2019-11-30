@@ -12,7 +12,7 @@
 
 **实现效果：**[演示视频](https://www.bilibili.com/video/av76318011/)   👈 托管到哔哩哔哩了！
 
-演示动态图
+演示动态图（为了能在Github上演示，我用PS把一个18M的Gif压缩到了100k，凑合看吧）
 
 <img src="image/ninegridview2.gif" width=300 height=600/>
 
