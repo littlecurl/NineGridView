@@ -918,6 +918,8 @@ int width = MeasureSpec.getSize(widthMeasureSpec);
 感谢以下前辈做出的贡献(排名不分先后)，晚辈只是踩在了巨人的肩膀上，换句话说，我只是抱了大佬的腿<img src="image/ku.png" />
 
 <p  style="text-align:center;"> <img src="image\xidatui.gif"/><br /><b>衷心感谢以下前辈们，致敬！</b></p>
+
+
 | 序号 | 来源   | 作者                                                         | 标题                                                         |
 | ---- | ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 1    | Github | [廖子尧](https://github.com/jeasonlzy/NineGridView)          | [《NineGridView》](https://github.com/jeasonlzy/NineGridView) |
@@ -936,6 +938,7 @@ int width = MeasureSpec.getSize(widthMeasureSpec);
 | 14   | Github | [CarGuo](https://github.com/CarGuo)                          | [《GSYVideoPlayer》](https://github.com/CarGuo/GSYVideoPlayer) |
 |      |        |                                                              |                                                              |
 | ...  | ...    | 还有很多大佬<br />没有记住名字                               | 很多很多优秀的文章，我没顾上搬到这里，在此一并表示感谢！     |
+
 
 另外感谢一些工具、文档、资料网站
 
