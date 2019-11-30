@@ -750,7 +750,7 @@ protected void onLayout(boolean changed, int l, int t, int r, int b) {
 
 需要注意一点就是代码中的rowNum和columNum都是从0开始算起的。
 
-<img src="image\image20191130124258942.png" width=500 height=600/> 
+<img src="image\image20191130124258942.jpg" width=500 height=600/> 
 
 考虑到如果只有一张图片的话，不应该显示在九宫格的左上角，而是单独显示一张图片；只有两张或四张图片的话，应该两张图片占满宽度。
 
