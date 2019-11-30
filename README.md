@@ -14,7 +14,7 @@
 
 演示动态图
 
-<img src="image/ninegridview.gif" width=300 height=600/>
+<img src="image/ninegridview2.gif" width=300 height=600/>
 
 **本文源码：[[我的Github地址]](https://github.com/littlecurl/NineGridView)** 欢迎star！<img src="image/dianzan.png"/> <img src="image/haixiu.png"/>
 
@@ -922,7 +922,6 @@ int width = MeasureSpec.getSize(widthMeasureSpec);
 感谢以下前辈做出的贡献(排名不分先后)，晚辈只是踩在了巨人的肩膀上，换句话说，我只是抱了大佬的腿<img src="image/ku.png" />
 
 <p  style="text-align:center;"> <img src="image\xidatui.gif"/><br /><b>衷心感谢以下前辈们，致敬！</b></p>
-
 | 序号 | 来源   | 作者                                                         | 标题                                                         |
 | ---- | ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 1    | Github | [廖子尧](https://github.com/jeasonlzy/NineGridView)          | [《NineGridView》](https://github.com/jeasonlzy/NineGridView) |
@@ -939,7 +938,7 @@ int width = MeasureSpec.getSize(widthMeasureSpec);
 | 12   | 博客园 | [弗兰克的猫](https://www.cnblogs.com/mfrank/category/1118474.html) | [《Java提高篇的若干文章》](https://www.cnblogs.com/mfrank/category/1118474.html) |
 | 13   | CSDN   | [code丶forward](https://blog.csdn.net/xingpidong)            | [《Android视频播放之ViewPager+VideoView》](https://blog.csdn.net/xingpidong/article/details/52933185) |
 | 14   | Github | [CarGuo](https://github.com/CarGuo)                          | [《GSYVideoPlayer》](https://github.com/CarGuo/GSYVideoPlayer) |
-|      |        |                                                              |                                                              |
+| 15   | 知乎   | [相机拿反了](https://www.zhihu.com/people/xin-hui-fei-xiang) | [《十种快速压缩gif的方法，一定要收藏》](https://zhuanlan.zhihu.com/p/28866581) |
 | ...  | ...    | 还有很多大佬<br />没有记住名字                               | 很多很多优秀的文章，我没顾上搬到这里，在此一并表示感谢！     |
 
 
