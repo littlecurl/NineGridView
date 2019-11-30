@@ -17,7 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.edu.heuet.littlecurl.R;
+import cn.edu.heuet.littlecurl.qzone.R;
 import cn.edu.heuet.littlecurl.ninegridview.base.NineGridViewAdapter;
 import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
 import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;

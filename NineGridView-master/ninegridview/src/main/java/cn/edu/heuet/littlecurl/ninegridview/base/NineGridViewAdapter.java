@@ -4,14 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.io.Serializable;
 import java.util.List;
 
-import cn.edu.heuet.littlecurl.R;
+import cn.edu.heuet.littlecurl.ninegridview.R;
 import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
 import cn.edu.heuet.littlecurl.ninegridview.detail.NineGridItemDetailActivity;
 import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridItemWrapperView;

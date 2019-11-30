@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import cn.edu.heuet.littlecurl.R;
+import cn.edu.heuet.littlecurl.qzone.R;
 import cn.edu.heuet.littlecurl.qzone.activity.QZoneActivity;
 
 /**

@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
-import cn.edu.heuet.littlecurl.R;
+import cn.edu.heuet.littlecurl.ninegridview.R;
 import cn.edu.heuet.littlecurl.ninegridview.base.NineGridViewAdapter;
 import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
 

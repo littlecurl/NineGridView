@@ -32,6 +32,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:multidex:1.0.3'
     // 基本组件库
     implementation 'androidx.appcompat:appcompat:1.1.0'
     // 约束性布局

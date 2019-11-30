@@ -15,7 +15,7 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 import java.util.List;
 
-import cn.edu.heuet.littlecurl.R;
+import cn.edu.heuet.littlecurl.ninegridview.R;
 import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
 import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
 import uk.co.senab.photoview.PhotoView;

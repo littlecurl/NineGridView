@@ -12,7 +12,7 @@ import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.edu.heuet.littlecurl.R;
+import cn.edu.heuet.littlecurl.qzone.R;
 import cn.edu.heuet.littlecurl.qzone.adapter.RecyclerVidewAdapter;
 import cn.edu.heuet.littlecurl.qzone.bean.Location;
 import cn.edu.heuet.littlecurl.qzone.bean.MyMedia;
@@ -76,10 +76,9 @@ public class QZoneActivity extends AppCompatActivity
         String videoUrl1 = "http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4";
         // 视频内容：感受到鸭力
         String videoUrl2 = "http://gslb.miaopai.com/stream/w95S1LIlrb4Hi4zGbAtC4TYx0ta4BVKr-PXjuw__.mp4?vend=miaopai&ssig=8f20ca2d86ec365f0f777b769184f8aa&time_stamp=1574944581588&mpflag=32&unique_id=1574940981591448";
-        // 视频内容：美洲狮幼崽
-        String videoUrl3 = "http://sjycdn.miaopai.com/stream/kCM1yjM7W-50LLA9jvEzoaj28stOGtWtmDdEIQ__.mp4?ssig=07f39662efb375bc4ff32681c04cd195&time_stamp=1574944758729";
         // 视频内容：狗崽子
         String videoUrl4 = "http://gslb.miaopai.com/stream/7-5Q7kCzeec9tu~9XvZAxNizNAL1TJC7KtJCuw__.mp4?vend=miaopai&ssig=82b42debfc2a51569bafe6ac7a993d89&time_stamp=1574944868488&mpflag=32&unique_id=1574940981591448";
+        String videoUrl3 = videoUrl4;
 
         MyMedia myMedia1 = new MyMedia(imgUrl1, videoUrl1);
         MyMedia myMedia2 = new MyMedia(imgUrl2);

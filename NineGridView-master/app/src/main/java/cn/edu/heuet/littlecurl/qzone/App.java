@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
-import cn.edu.heuet.littlecurl.R;
+import cn.edu.heuet.littlecurl.qzone.R;
 import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
 
 /**

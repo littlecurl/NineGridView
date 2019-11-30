@@ -22,7 +22,7 @@ import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.widget.AppCompatImageView;
 
-import cn.edu.heuet.littlecurl.R;
+import cn.edu.heuet.littlecurl.qzone.R;
 
 public class CircleImageView extends AppCompatImageView {
 
