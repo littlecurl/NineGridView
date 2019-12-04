@@ -1,4 +1,4 @@
-# **Android**实现九宫格图片+视频混合展示（仿QQ空间）
+# Android实现九宫格图片+视频混合展示（仿QQ空间）
 
 [TOC]
 
@@ -12,11 +12,9 @@
 
 **实现效果：**[演示视频](https://www.bilibili.com/video/av76318011/)   👈 托管到哔哩哔哩了！
 
-**演示截图：**
+演示截图：
 
-![九宫格图片](https://img-blog.csdnimg.cn/20191130164348197.png)
-
-![九宫格图片2](https://img-blog.csdnimg.cn/20191130164352439.png)
+<img src="image/show1.png" width=200 height=300 /><img src="image/show2.png"  width=200 height=300 /><img src="image/show3.png"  width=200 height=300 />
 
 **本文源码：[[我的Github地址]](https://github.com/littlecurl/NineGridView)** 欢迎star！<img src="image/dianzan.png"/> <img src="image/haixiu.png"/>
 
@@ -924,7 +922,9 @@ int width = MeasureSpec.getSize(widthMeasureSpec);
 感谢以下前辈做出的贡献(排名不分先后)，晚辈只是踩在了巨人的肩膀上，换句话说，我只是抱了大佬的腿<img src="image/ku.png" />
 
 <p  style="text-align:center;"> <img src="image\xidatui.gif"/><br /><b>衷心感谢以下前辈们，致敬！</b></p>
-...       
+<hr />
+...    
+
 | 序号 | 来源   | 作者                                                         | 标题                                                         |
 | ---- | ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 1    | Github | [廖子尧](https://github.com/jeasonlzy/NineGridView)          | [《NineGridView》](https://github.com/jeasonlzy/NineGridView) |
