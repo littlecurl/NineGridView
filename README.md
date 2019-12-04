@@ -12,9 +12,9 @@
 
 **实现效果：**[演示视频](https://www.bilibili.com/video/av76318011/)   👈 托管到哔哩哔哩了！
 
-演示动态图（为了能在Github上演示，我用PS把一个18M的Gif压缩到了100k，凑合看吧）
+演示截图：
 
-<img src="image/ninegridview2.gif"/>
+<img src="image/show1.png" width=200 height=300 /><img src="image/show2.png"  width=200 height=300 /><img src="image/show3.png"  width=200 height=300 />
 
 **本文源码：[[我的Github地址]](https://github.com/littlecurl/NineGridView)** 欢迎star！<img src="image/dianzan.png"/> <img src="image/haixiu.png"/>
 
@@ -923,6 +923,7 @@ int width = MeasureSpec.getSize(widthMeasureSpec);
 
 <p  style="text-align:center;"> <img src="image\xidatui.gif"/><br /><b>衷心感谢以下前辈们，致敬！</b></p>
 <hr />
+...   
 | 序号 | 来源   | 作者                                                         | 标题                                                         |
 | ---- | ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 1    | Github | [廖子尧](https://github.com/jeasonlzy/NineGridView)          | [《NineGridView》](https://github.com/jeasonlzy/NineGridView) |
