@@ -923,8 +923,6 @@ int width = MeasureSpec.getSize(widthMeasureSpec);
 
 <p  style="text-align:center;"> <img src="image\xidatui.gif"/><br /><b>衷心感谢以下前辈们，致敬！</b></p>
 <hr />
-...    
-
 | 序号 | 来源   | 作者                                                         | 标题                                                         |
 | ---- | ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 1    | Github | [廖子尧](https://github.com/jeasonlzy/NineGridView)          | [《NineGridView》](https://github.com/jeasonlzy/NineGridView) |
