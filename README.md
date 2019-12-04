@@ -12,9 +12,9 @@
 
 **实现效果：**[演示视频](https://www.bilibili.com/video/av76318011/)   👈 托管到哔哩哔哩了！
 
-演示截图：
+演示动态图（为了能在Github上演示，我用PS把一个18M的Gif压缩到了100k，凑合看吧）
 
-<img src="image/show1.png" width=200 height=300 /><img src="image/show2.png"  width=200 height=300 /><img src="image/show3.png"  width=200 height=300 />
+<img src="image/ninegridview2.gif"/>
 
 **本文源码：[[我的Github地址]](https://github.com/littlecurl/NineGridView)** 欢迎star！<img src="image/dianzan.png"/> <img src="image/haixiu.png"/>
 
