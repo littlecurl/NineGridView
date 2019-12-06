@@ -69,9 +69,9 @@ public class QZoneActivity extends AppCompatActivity
     // 自定义的测试数据（假装这是网络请求并解析后的数据）
     private void loadMyTestDate() {
         // 先构造MyMedia
-        String imgUrl1 = "http://i2.tiimg.com/702441/6e3d61b352409f34.png";
-        String imgUrl2 = "http://i2.tiimg.com/702441/ca8092e87a2f2b30.jpg";
-        String imgUrl3 = "http://i2.tiimg.com/702441/081b443af609c94c.png";
+        String imgUrl1 = "https://i.imgur.com/N7EL5Gs.png";
+        String imgUrl2 = "https://i.imgur.com/8Mezayi.jpg";
+        String imgUrl3 = "https://i.imgur.com/7TLl3sI.png";
         // 视频内容：敲架子鼓
         String videoUrl1 = "http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4";
         // 视频内容：感受到鸭力
