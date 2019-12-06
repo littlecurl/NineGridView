@@ -5,10 +5,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
+import androidx.multidex.MultiDexApplication;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
-import cn.edu.heuet.littlecurl.qzone.R;
 import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
 
 /**
@@ -17,9 +18,9 @@ import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
  * 加载那些只需要加载一次的东西
  * 比如：图片加载器
  * 该类需要在AndroidManifest.xml文件中进行配置
- * android:name=".qzone.App"
+ * android:name=".App"
  */
-public class App extends Application {
+public class App extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();

@@ -11,16 +11,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.edu.heuet.littlecurl.qzone.R;
 import cn.edu.heuet.littlecurl.ninegridview.base.NineGridViewAdapter;
 import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
 import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
+import cn.edu.heuet.littlecurl.qzone.R;
 import cn.edu.heuet.littlecurl.qzone.bean.MyMedia;
 import cn.edu.heuet.littlecurl.qzone.bean.RecyclerViewItem;
 
