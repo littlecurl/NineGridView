@@ -10,8 +10,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.edu.heuet.littlecurl.qzone.R;
 import cn.edu.heuet.littlecurl.qzone.adapter.RecyclerVidewAdapter;
 import cn.edu.heuet.littlecurl.qzone.bean.Location;
@@ -31,11 +29,9 @@ public class QZoneActivity extends AppCompatActivity
     private final String TAG = "QZoneActivity:";
 
     // 下拉刷新控件
-    @BindView(R.id.spl)
     SwipeRefreshLayout swipeRefreshLayout;
 
     // 数据展示
-    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
     public RecyclerVidewAdapter recyclerViewAdapter;
@@ -45,11 +41,14 @@ public class QZoneActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qzone);
-        ButterKnife.bind(this);
-
+        // 初始化布局
+        initView();
         // 自定义数据
         loadMyTestDate();
+    }
 
+    private void initView(){
+        recyclerView = findViewById(R.id.recyclerView);
         // 布局管理器必须有，否则不显示布局
         // No layout manager attached; skipping layout
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -63,6 +62,7 @@ public class QZoneActivity extends AppCompatActivity
         // 下拉刷新控件
         // 因为该类 implements SwipeRefreshLayout.OnRefreshListener
         // 所以只需要在onCreate里注册一下监听器，具体的响应事件可以写到onCreate方法之外
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 

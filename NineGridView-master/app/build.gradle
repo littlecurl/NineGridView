@@ -32,15 +32,13 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    // 配合上面配置的 multiDexEnabled true
+    // 配合上面配置的 multiDexEnabled true，还有一点在Application继承上
+    // App extends MultiDexApplication
     implementation 'com.android.support:multidex:1.0.3'
     // 基本组件库
     implementation 'androidx.appcompat:appcompat:1.1.0'
     // 约束性布局
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    // ButterKnife黄油刀
-    implementation 'com.jakewharton:butterknife:10.2.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     // SwipeRefreshLayout下拉刷新
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     // Grid网格布局

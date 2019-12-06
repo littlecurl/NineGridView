@@ -35,8 +35,7 @@ dependencies {
     implementation group: 'com.github.bumptech.glide', name: 'glide', version: '4.9.0'
 
     // GSYVideoPlayer完整版引入
-    implementation 'com.shuyu:GSYVideoPlayer:7.1.1'
-
+    implementation 'com.shuyu:GSYVideoPlayer:7.1.2'
     // ViewPager2 需要单独引入
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
 }
