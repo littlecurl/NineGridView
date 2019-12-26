@@ -121,15 +121,18 @@ public class RecyclerVidewAdapter extends RecyclerView.Adapter<RecyclerVidewAdap
 
         // 为满足九宫格适配器数据要求，需要构造对应的List
         ArrayList<MyMedia> mediaList = recyclerViewItem.getMediaList();
-        ArrayList<NineGridItem> nineGridItemList = new ArrayList<>();
-        for (MyMedia myMedia : mediaList) {
-            String thumbnailUrl = myMedia.getImageUrl();
-            String bigImageUrl = thumbnailUrl;
-            String videoUrl = myMedia.getVideoUrl();
-            nineGridItemList.add(new NineGridItem(thumbnailUrl, bigImageUrl, videoUrl));
+        // 没有数据就没有九宫格
+        if (mediaList != null && mediaList.size() > 0) {
+            ArrayList<NineGridItem> nineGridItemList = new ArrayList<>();
+            for (MyMedia myMedia : mediaList) {
+                String thumbnailUrl = myMedia.getImageUrl();
+                String bigImageUrl = thumbnailUrl;
+                String videoUrl = myMedia.getVideoUrl();
+                nineGridItemList.add(new NineGridItem(thumbnailUrl, bigImageUrl, videoUrl));
+            }
+            NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
+            holder.nineGridViewGroup.setAdapter(nineGridViewAdapter);
         }
-        NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
-        holder.nineGridViewGroup.setAdapter(nineGridViewAdapter);
     }
 
     @Override
